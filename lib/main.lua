@@ -11,7 +11,7 @@ end
 
 function weather_mod.set_weather(name)
 	if type(weather_mod.weathers[name]) == nil then
-		minetest.log("warning", "[Ultimate Weathers] Weather does not exist")
+		minetest.log("warning", "[Believable Weather] Weather does not exist")
 		return
 	end
 	weather_mod.state.current_weather = name

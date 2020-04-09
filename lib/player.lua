@@ -41,7 +41,7 @@ local function raycast(player, origin)
 	end
 	o = ray:next()
 	if o then
-		minetest.log("warning","[ultimate_weather] raycast hit more after hitting the player\n"..
+		minetest.log("warning","[Believable Weather] raycast hit more after hitting the player\n"..
 			dump2(o,"o"))
 	end
 	return true

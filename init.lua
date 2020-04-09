@@ -1,7 +1,7 @@
-assert(minetest.add_particlespawner, "Ultimate Weather requires a more current version of Minetest")
+assert(minetest.add_particlespawner, "Believable Weather requires a more current version of Minetest")
 weather_mod = {}
 
-weather_mod.modname = "ultimate_weather"
+weather_mod.modname = "believable_weather"
 weather_mod.modpath = minetest.get_modpath(weather_mod.modname)
 
 local function getBoolSetting(name, default)
@@ -15,19 +15,20 @@ end
 -- load settings from config file
 weather_mod.settings = {
 	damage			= getBoolSetting("damage", true),
-	weather			= getBoolSetting("weather", true),
+	particles		= getBoolSetting("particles", true),
 	leaves			= getBoolSetting("leaves", true),
 	snow				= getBoolSetting("snow_layers", true),
 	puddles			= getBoolSetting("puddles", true),
 	skybox			= getBoolSetting("skybox", true),
 	raycasting	= getBoolSetting("raycasting", true),
 	wind				= getBoolSetting("wind", true),
+	wind_slow		= getBoolSetting("wind_slow", true),
 	flowers			= getBoolSetting("flowers", true),
 	fruit				= getBoolSetting("fruit", true),
 	soil				= getBoolSetting("soil", true),
 	seasons			= getBoolSetting("seasons", true),
-	heat				= getNumericSetting("heat", 0),
-	humidity		= getNumericSetting("humidity", 0),
+	heat				= getNumericSetting("base_heat", 0),
+	humidity		= getNumericSetting("base_humidity", 0),
 	max_height	= getNumericSetting("max_height", 120),
 	min_height	= getNumericSetting("min_height", -50)
 }

@@ -2,6 +2,7 @@ default
 lightning?
 farming?
 flowers?
+flowers_plus?
 bakedclay?
 moreplants?
 lemontree?

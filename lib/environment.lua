@@ -55,7 +55,7 @@ function weather_mod.get_weather(pos, wind)
 		end
 	end
 	if type(weather) == "nil" then
-		minetest.log("error", "[Ultimate Weather] No default weather registered")
+		minetest.log("error", "[Believable Weather] No default weather registered")
 	end
 	minetest.log(weather)
 	return weather
