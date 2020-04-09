@@ -1,0 +1,2 @@
+The ultimate weather mod with support not only for rain, snow, and hail,
+but also seasons, dynamic puddles and snow layers, wind, regrowing fruit and much more.

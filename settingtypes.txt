@@ -1,0 +1,16 @@
+ultimate_weather_damage (Storms and hail cause damage) bool true
+ultimate_weather_weather (Enable weather effects) bool true
+ultimate_weather_leaves (Leave color changes in autumn) bool true
+ultimate_weather_snow_layers (Place snow layers on ground) bool true
+ultimate_weather_puddles (Place rain puddles on ground) bool true
+ultimate_weather_skybox (Darken sky during rain) bool true
+ultimate_weather_raycasting (Use performance-heavy indoors check) bool false
+ultimate_weather_wind (Allow wind to angle rainfall) bool true
+ultimate_weather_flowers (Flowers will respawn in spring and die in winter) bool true
+ultimate_weather_fruit (Apples and other fruits will regrow) bool true
+ultimate_weather_soil (Soil turns wet during rain) bool true
+ultimate_weather_seasons (Use seasons instead of permanent summer) bool true
+ultimate_weather_base_temperature (Base temperature) float 0
+ultimate_weather_base_humidity (Base humidity) float 0
+ultimate_weather_max_height (Maximum height of weather effects) int 120
+ultimate_weather_min_height (Minimum height of weather effects) int -50
