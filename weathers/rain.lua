@@ -1,30 +1,48 @@
 local name = weather_mod.modname .. ":rain"
 
-local weather = {
-	priority = 10,
+local config = {}
+
+config.environment = {
 	spawn_puddles = true,
-	wetten_farmland = true,
-	sound = "weather_rain1"
+	wetten_farmland = true
 }
 
-weather.particles = {
+config.sound = {
+	name = "weather_rain",
+	gain = 1
+}
+
+config.particles = {
 	min_pos = {x=-9, y=7, z=-9},
 	max_pos = {x= 9, y=7, z= 9},
 	falling_speed=10,
-	amount=20,
+	amount=40,
 	exptime=0.8,
-	size=25,
-	texture="weather_rain.png"
+	size=1,
+	texture = "weather_raindrop.png"
 }
 
-weather.clouds = {
-	density = 0.5,
-	color = "#a4a0b6e5"
-}
-
-weather.conditions = {
+config.conditions = {
+	min_height = weather_mod.settings.min_height,
+	max_height = weather_mod.settings.max_height,
 	min_heat			= 30,
-	min_humidity	= 40
+	min_humidity	= 40,
+	max_humidity	= 60
 }
 
-weather_mod.register_weather(name, weather)
+local function override(params)
+	local avg_humidity = 40
+	local intensity = params.humidity / avg_humidity
+	local dynamic_config = {
+		sound = {
+			gain = math.min(intensity, 1.2)
+		},
+		particles = {
+			amount = 20 * math.min(intensity, 1.5),
+			falling_speed = 10 / math.min(intensity, 1.3)
+		}
+	}
+	return dynamic_config
+end
+
+weather_mod.register_effect(name, config, override)

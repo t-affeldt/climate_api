@@ -27,46 +27,58 @@ function weather_mod.remove_physics(player, effect)
 	end
 end
 
--- function taken from weather mod
--- see https://github.com/theFox6/minetest_mod_weather/blob/master/weather/api.lua#L110
-local function raycast(player, origin)
-	local hitpos = vector.add(player:get_pos(),vector.new(0,1,0))
-	local ray = minetest.raycast(origin,hitpos)
-	local o = ray:next()
-	if not o then return false end
-	if o.type~="object" then return false end -- hit node or something
-	if not o.ref:is_player() then return false end -- hit different object
-	if o.ref:get_player_name() ~= player:get_player_name() then
-		return false --hit other player
-	end
-	o = ray:next()
-	if o then
-		minetest.log("warning","[Believable Weather] raycast hit more after hitting the player\n"..
-			dump2(o,"o"))
-	end
-	return true
-end
-
-local function check_light(player)
+function weather_mod.is_outdoors(player)
 	return minetest.get_node_light(player:getpos(), 0.5) == 15
 end
 
-function weather_mod.is_outdoors(player, origin)
-	if weather_mod.settings.raycasting then
-		return raycast(player, origin)
-	else
-		return check_light(player)
+function weather_mod.set_clouds(player)
+	if not weather_mod.settings.skybox then
+		return
+	end
+	local ppos = player:get_pos()
+	local humidity = weather_mod.get_humidity(ppos) / 200
+	local clouds = {}
+	clouds.speed = vector.multiply(weather_mod.state.wind, 2)
+	clouds.color = "#fff0f0c5"
+	clouds.density = math.max(math.min(humidity, 0.1), 0.9)
+	player:set_clouds(clouds)
+end
+
+function weather_mod.play_sound(player, effect)
+	local playername = player:get_player_name()
+	if not effect.sound_handles[playername] then
+		local handle = minetest.sound_play(effect.config.sound, {
+			to_player = playername,
+			loop = true
+		})
+		if handle then
+			effect.sound_handles[playername] = handle
+			effect.sound_volumes[playername] = effect.config.sound.gain or 1
+		end
 	end
 end
 
-function weather_mod.set_headwind(player, wind)
-	local movement = vector.normalize(player:get_player_velocity())
-	local product = vector.dot(movement, wind)
-	-- logistic function, scales between 0 and 2
-	-- see https://en.wikipedia.org/wiki/Logistic_function
-	local L = 2 -- maximum value
-	local k = 0.1 -- growth rate
-	local z = 1 -- midpoint
-	local factor = L / (1 + math.exp(-k * (product - z)))
-	weather_mod.add_physics(player, "speed", factor)
+function weather_mod.stop_sound(player, effect)
+	local playername = player:get_player_name()
+	if effect.sound_handles[playername] then
+		minetest.sound_stop(effect.sound_handles[playername])
+		effect.sound_handles[playername] = nil
+		effect.sound_volumes[playername] = nil
+	end
+end
+
+function weather_mod.handle_sounds(player, sounds)
+	local playername = player:get_player_name()
+	for name, effect in pairs(weather_mod.weathers) do
+		if type(effect.sound_handles[playername]) == "nil" and type(sounds[name]) ~= "nil" then
+			weather_mod.play_sound(player, effect)
+		elseif type(effect.sound_handles[playername]) ~= "nil" and type(sounds[name]) == "nil" then
+			weather_mod.stop_sound(player, effect)
+		elseif type(effect.sound_handles[playername]) ~= "nil" and type(sounds[name]) ~= "nil" then
+			local volume = sounds[name].gain or 1
+			if effect.sound_volumes[playername] ~= volume then
+				minetest.sound_fade(effect.sound_handles[playername], 1, volume)
+			end
+		end
+	end
 end

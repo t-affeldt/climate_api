@@ -1,28 +1,33 @@
-local GSCYCLE = 0
-local temperature = 10
-local humidity = 100
-local wind = vector.new(10, 0, -0.25)
+local GSCYCLE = 0.05
+local RECALCCYCLE = 1
 
 weather_mod.weathers = {}
-function weather_mod.register_weather(name, weather)
+function weather_mod.register_effect(name, config, override)
 	-- TODO: check and sanitize
-	weather_mod.weathers[name] = weather
+	weather_mod.weathers[name] = {
+		config = config,
+		override = override,
+		sound_handles = {},
+		sound_volumes = {}
+	}
 end
 
-function weather_mod.set_weather(name)
-	if type(weather_mod.weathers[name]) == nil then
-		minetest.log("warning", "[Believable Weather] Weather does not exist")
-		return
+-- from https://stackoverflow.com/a/29133654
+local function merge(a, b)
+	if type(a) == 'table' and type(b) == 'table' then
+		for k,v in pairs(b) do if type(v)=='table' and type(a[k] or false)=='table' then merge(a[k],v) else a[k]=v end end
 	end
-	weather_mod.state.current_weather = name
+	return a
 end
 
-local function is_outside(player, wind)
-	local ppos = player:getpos()
-	local wind_pos = vector.multiply(wind,-1)
-	local skylight_pos = vector.add(ppos, vector.new(0, 40, 0))
-	local downfall_origin = vector.add(skylight_pos,wind_pos)
-	return weather_mod.is_outdoors(player, downfall_origin)
+local function build_effect_config(weather, climate)
+	local config = weather.config
+	local override = weather.override
+	if type(override) == "nil" then
+		return config
+	end
+	local dynamic_config = override(climate)
+	return merge(config, dynamic_config)
 end
 
 local function get_texture(particles)
@@ -34,19 +39,23 @@ end
 
 local function spawn_particles(player, particles, wind)
 	local ppos = player:getpos()
-	local wind_pos = vector.multiply(wind,-1)
-	local wind_speed = vector.length(wind)
+	local wind_pos = vector.multiply(weather_mod.state.wind,-1)
+	local wind_speed = vector.length(weather_mod.state.wind)
 
 	local texture = get_texture(particles)
 
 	local minp = vector.add(vector.add(ppos, particles.min_pos),wind_pos)
 	local maxp = vector.add(vector.add(ppos, particles.max_pos),wind_pos)
 
-	local vel = {x=wind.x,y=-particles.falling_speed,z=wind.z}
-	local acc = {x=0, y=0, z=0}
+	local vel = vector.new({
+		x=weather_mod.state.wind.x,
+		y=-particles.falling_speed,
+		z=weather_mod.state.wind.z
+	})
+	local acc = vector.new({x=0, y=0, z=0})
 
 	local exp = particles.exptime
-	local vertical = wind_speed < 3
+	local vertical = math.abs(vector.normalize(vel).y) >= 0.6
 
 	minetest.add_particlespawner({
 		amount=particles.amount,
@@ -69,62 +78,36 @@ local function spawn_particles(player, particles, wind)
 	})
 end
 
-local sound_handles = {}
-local function play_sound(player, sound)
-	local playername = player:get_player_name()
-	if not sound_handles[playername] then
-		local handle = minetest.sound_play(sound, {
-			to_player = playername,
-			loop = true
-		})
-		if handle then
-			sound_handles[playername] = handle
+local function handle_weather_effects(player)
+	local ppos = player:getpos()
+	local climate = weather_mod.get_climate(ppos)
+	local active_effects = weather_mod.get_effects(climate)
+	local sounds = {}
+
+	for _, effect in ipairs(active_effects) do
+		local weather = weather_mod.weathers[effect]
+		local config = build_effect_config(weather, climate)
+
+		local outdoors = weather_mod.is_outdoors(player)
+		if type(config.particles) ~= "nil" and outdoors then
+			spawn_particles(player, config.particles, wind)
+		end
+		if type(config.sound) ~= nil and outdoors then
+			sounds[effect] = config.sound
 		end
 	end
-end
-
-local function stop_sound(player)
-	local playername = player:get_player_name()
-	if sound_handles[playername] then
-		minetest.sound_stop(sound_handles[playername])
-		sound_handles[playername] = nil
-	end
-end
-
-local function handle_weather()
-	for _, player in ipairs(minetest.get_connected_players()) do
-		local ppos = player:getpos()
-		weather_mod.set_weather(weather_mod.get_weather(ppos, wind))
-
-		if ppos.y < weather_mod.settings.min_height or ppos.y > weather_mod.settings.max_height then
-			return
-		end
-
-		local weather = weather_mod.weathers[weather_mod.state.current_weather]
-		local clouds = weather.clouds
-		clouds.speed = vector.multiply(wind, 2)
-		player:set_clouds(clouds)
-
-		weather_mod.set_headwind(player, wind)
-		--player:set_clouds({ density = 0.6, color = "#a4a0b6e5", speed = wind })
-
-		local outdoors = is_outside(player, wind)
-		if type(weather.particles) ~= "nil" and outdoors then
-			spawn_particles(player, weather.particles, wind)
-		end
-
-		if type(weather.sound) ~= "nil" and outdoors then
-			play_sound(player, weather.sound)
-		else
-			stop_sound(player)
-		end
-	end
+	weather_mod.handle_sounds(player, sounds)
 end
 
 local timer = 0
 minetest.register_globalstep(function(dtime)
 	timer = timer + dtime
 	if timer < GSCYCLE then return end
+	for _, player in ipairs(minetest.get_connected_players()) do
+		handle_weather_effects(player)
+		if timer >= RECALCCYCLE then
+			weather_mod.set_clouds(player)
+		end
+	end
 	timer = 0
-	handle_weather()
 end)

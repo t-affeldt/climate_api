@@ -1,4 +1,4 @@
-local name = weather_mod.modname .. ":snow"
+local name = weather_mod.modname .. ":snow_heavy"
 
 local config = {}
 
@@ -7,29 +7,24 @@ config.environment = {
 }
 
 config.particles = {
-	min_pos = {x=-20, y= 3, z=-20},
-	max_pos = {x= 20, y=12, z= 20},
+	min_pos = {x=-12, y= 5, z=-12},
+	max_pos = {x= 12, y=9, z= 12},
 	falling_speed=1,
-	amount=40,
+	amount=1,
 	exptime=8,
-	size=1,
-	textures = {}
+	size=12,
+	texture="weather_snow.png"
 }
-
-for i = 1,12,1 do
-	config.particles.textures[i] = "weather_snowflake" .. i .. ".png"
-end
 
 config.conditions = {
 	min_height = weather_mod.settings.min_height,
 	max_height = weather_mod.settings.max_height,
 	max_heat				= 40,
-	min_humidity		= 40,
-	max_humidity		= 55
+	min_humidity		= 55
 }
 
 local function override(params)
-	local avg_humidity = 40
+	local avg_humidity = 55
 	local intensity = params.humidity / avg_humidity
 	local dynamic_config = {
 		sound = {

@@ -34,21 +34,23 @@ weather_mod.settings = {
 }
 
 weather_mod.state = {
-	current_weather = weather_mod.modname .. ":snowstorm",
 	heat = 1,
-	humidity = 1
+	humidity = 1,
+	wind = vector.new(0, 0, -0.25)
 }
 
 -- import core API
 dofile(weather_mod.modpath.."/lib/player.lua")
 dofile(weather_mod.modpath.."/lib/environment.lua")
+dofile(weather_mod.modpath.."/lib/wind.lua")
 dofile(weather_mod.modpath.."/lib/lightning.lua")
 dofile(weather_mod.modpath.."/lib/main.lua")
+dofile(weather_mod.modpath.."/lib/commands.lua")
 
 -- import individual weather types
-dofile(weather_mod.modpath.."/weathers/clear.lua")
 dofile(weather_mod.modpath.."/weathers/rain.lua")
-dofile(weather_mod.modpath.."/weathers/rainstorm.lua")
+dofile(weather_mod.modpath.."/weathers/rain_heavy.lua")
 dofile(weather_mod.modpath.."/weathers/snow.lua")
-dofile(weather_mod.modpath.."/weathers/snowstorm.lua")
+dofile(weather_mod.modpath.."/weathers/snow_heavy.lua")
+dofile(weather_mod.modpath.."/weathers/storm.lua")
 dofile(weather_mod.modpath.."/weathers/sandstorm.lua")

@@ -13,50 +13,47 @@ function weather_mod.get_humidity(pos)
 	return (base + biome) * random
 end
 
+function weather_mod.get_climate(pos)
+	local climate = {pos = pos}
+	climate.heat = weather_mod.get_heat(pos)
+	climate.humidity = weather_mod.get_humidity(pos)
+	climate.windspeed = vector.length(weather_mod.state.wind)
+	return climate
+end
+
 local function is_acceptable_weather_param(value, attr, config)
-	local min = config.conditions["min_" .. attr] or -10000
+	local min = config.conditions["min_" .. attr] or -math.huge
 	local max = config.conditions["max_" .. attr] or  math.huge
-	minetest.log(attr .. ": " .. value .. " <=> " .. min .. "," .. max)
 	return value > min and value <= max
 end
 
-function weather_mod.get_weather(pos, wind)
+function weather_mod.get_effects(climate)
+	local forced_weather = weather_mod.state.current_weather
+	if type(forced_weather) ~= nil and forced_weather ~= "auto" then
+		return { forced_weather }
+	end
 	local params = {}
-	params.heat = weather_mod.get_heat(pos)
-	params.humidity = weather_mod.get_humidity(pos)
-	params.windspeed = vector.length(wind)
-	minetest.log(params.heat .. ", " .. params.humidity .. ", " .. params.windspeed)
+	params.heat = climate.heat
+	params.humidity = climate.humidity
+	params.windspeed = vector.length(weather_mod.state.wind)
+	params.height = climate.pos.y
 
-	local weather
-	local priority = -1
-	local attributes = { "heat", "humidity", "windspeed" }
-	for name, config in pairs(weather_mod.weathers) do
-		minetest.log(dump2(priority, "p"))
-		if type(priority) ~= "nil" and config.priority < priority then
-			minetest.log("skipped " .. name)
+	local effects = {}
+	local attributes = { "heat", "humidity", "windspeed", "height" }
+	for name, effect in pairs(weather_mod.weathers) do
+		if type(effect.config.conditions) == "nil" then
+			table.insert(effects, name)
+			goto continue
+		end
 
-		elseif type(config.conditions) == "nil" then
-			weather = name
-			priority = config.priority
-			minetest.log("selected (nil) " .. name)
-
-		else
-			local check = true
-			for _, attr in ipairs(attributes) do
-				if not is_acceptable_weather_param(params[attr], attr, config) then
-					check = false
-				end
-			end
-			if check then
-				weather = name
-				priority = config.priority
-				minetest.log("selected " .. name)
+		for _, attr in ipairs(attributes) do
+			if not is_acceptable_weather_param(params[attr], attr, effect.config) then
+				goto continue
 			end
 		end
+		table.insert(effects, name)
+		::continue::
 	end
-	if type(weather) == "nil" then
-		minetest.log("error", "[Believable Weather] No default weather registered")
-	end
-	minetest.log(weather)
-	return weather
+	minetest.log(dump2(effects, "effects"))
+	return effects
 end
