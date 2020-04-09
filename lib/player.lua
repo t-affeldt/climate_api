@@ -36,11 +36,11 @@ function weather_mod.set_clouds(player)
 		return
 	end
 	local ppos = player:get_pos()
-	local humidity = weather_mod.get_humidity(ppos) / 200
+	local humidity = weather_mod.get_humidity(ppos) / 100
 	local clouds = {}
 	clouds.speed = vector.multiply(weather_mod.state.wind, 2)
 	clouds.color = "#fff0f0c5"
-	clouds.density = math.max(math.min(humidity, 0.1), 0.9)
+	clouds.density = math.max(math.min(humidity, 0.8), 0.1)
 	player:set_clouds(clouds)
 end
 
@@ -81,4 +81,12 @@ function weather_mod.handle_sounds(player, sounds)
 			end
 		end
 	end
+end
+
+function weather_mod.damage_player(player, amount, reason)
+	if not weather_mod.settings.damage then
+		return
+	end
+	local hp = player:get_hp()
+	player:set_hp(current_hp - amount, reason)
 end

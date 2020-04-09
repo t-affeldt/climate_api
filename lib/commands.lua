@@ -29,7 +29,7 @@ minetest.register_chatcommand("set_weather", {
 
 -- Set wind speed and direction
 minetest.register_chatcommand("set_wind", {
-	params = "<weather>",
+	params = "<wind>",
 	description = "Set wind to the given x,z direction", -- full description
 	privs = {weather = true},
 	func = function(name, param)
@@ -50,7 +50,7 @@ minetest.register_chatcommand("set_wind", {
 
 -- Set base value of global heat level
 minetest.register_chatcommand("set_heat", {
-	params = "<weather>",
+	params = "<heat>",
 	description = "Set base value of global heat level", -- full description
 	privs = {weather = true},
 	func = function(name, param)
@@ -69,7 +69,7 @@ minetest.register_chatcommand("set_heat", {
 
 -- Set base value of global humidity level
 minetest.register_chatcommand("set_humidity", {
-	params = "<weather>",
+	params = "<humidity>",
 	description = "Set base value of global humidity level", -- full description
 	privs = {weather = true},
 	func = function(name, param)

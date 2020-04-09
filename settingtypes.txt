@@ -1,17 +1,17 @@
-ultimate_weather_damage (Storms and hail cause damage) bool true
-ultimate_weather_particles (Show particle effects) bool true
-ultimate_weather_leaves (Leave color changes in autumn) bool true
-ultimate_weather_snow_layers (Place snow layers on ground) bool true
-ultimate_weather_puddles (Place rain puddles on ground) bool true
-ultimate_weather_skybox (Darken sky during rain) bool true
-ultimate_weather_raycasting (Use more accurate indoors check) bool false
-ultimate_weather_wind (Allow wind to angle rainfall) bool true
-ultimate_weather_wind_slow (Allow wind to impact movement speed) bool true
-ultimate_weather_flowers (Flowers will respawn in spring and die in winter) bool true
-ultimate_weather_fruit (Apples and other fruits will regrow) bool true
-ultimate_weather_soil (Soil turns wet during rain) bool true
-ultimate_weather_seasons (Use seasons instead of permanent summer) bool true
-ultimate_weather_base_heat (Base temperature) float 0
-ultimate_weather_base_humidity (Base humidity) float 0
-ultimate_weather_max_height (Maximum height of weather effects) int 120
-ultimate_weather_min_height (Minimum height of weather effects) int -50
+believable_weather_damage (Storms and hail cause damage) bool true
+believable_weather_particles (Show particle effects) bool true
+believable_weather_leaves (Leave color changes in autumn) bool true
+believable_weather_snow_layers (Place snow layers on ground) bool true
+believable_weather_puddles (Place rain puddles on ground) bool true
+believable_weather_skybox (Darken sky during rain) bool true
+believable_weather_raycasting (Use more accurate indoors check) bool false
+believable_weather_wind (Allow wind to angle rainfall) bool true
+believable_weather_wind_slow (Allow wind to impact movement speed) bool true
+believable_weather_flowers (Flowers will respawn in spring and die in winter) bool true
+believable_weather_fruit (Apples and other fruits will regrow) bool true
+believable_weather_soil (Soil turns wet during rain) bool true
+believable_weather_seasons (Use seasons instead of permanent summer) bool true
+believable_weather_base_heat (Base temperature) float 0
+believable_weather_base_humidity (Base humidity) float 0
+believable_weather_max_height (Maximum height of weather effects) int 120
+believable_weather_min_height (Minimum height of weather effects) int -50

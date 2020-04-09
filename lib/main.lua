@@ -82,6 +82,7 @@ local function handle_weather_effects(player)
 	local ppos = player:getpos()
 	local climate = weather_mod.get_climate(ppos)
 	local active_effects = weather_mod.get_effects(climate)
+	local environment_flags = {}
 	local sounds = {}
 
 	for _, effect in ipairs(active_effects) do
@@ -92,11 +93,19 @@ local function handle_weather_effects(player)
 		if type(config.particles) ~= "nil" and outdoors then
 			spawn_particles(player, config.particles, wind)
 		end
-		if type(config.sound) ~= nil and outdoors then
+		if type(config.sound) ~= "nil" and outdoors then
 			sounds[effect] = config.sound
+		end
+		if type(config.environment) ~= "nil" and outdoors then
+			for flag, value in pairs(config.environment) do
+				if value ~= false then
+					environment_flags[flag] = value
+				end
+			end
 		end
 	end
 	weather_mod.handle_sounds(player, sounds)
+	weather_mod.handle_events(player, environment_flags)
 end
 
 local timer = 0

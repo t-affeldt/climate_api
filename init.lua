@@ -43,7 +43,6 @@ weather_mod.state = {
 dofile(weather_mod.modpath.."/lib/player.lua")
 dofile(weather_mod.modpath.."/lib/environment.lua")
 dofile(weather_mod.modpath.."/lib/wind.lua")
-dofile(weather_mod.modpath.."/lib/lightning.lua")
 dofile(weather_mod.modpath.."/lib/main.lua")
 dofile(weather_mod.modpath.."/lib/commands.lua")
 

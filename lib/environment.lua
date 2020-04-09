@@ -1,3 +1,10 @@
+local mod_lightning = minetest.get_modpath("lightning")
+
+local LIGHTNING_CHANCE = 1000
+if mod_lightning then
+   lightning.auto = false
+end
+
 function weather_mod.get_heat(pos)
 	local base = weather_mod.settings.heat;
 	local biome = minetest.get_heat(pos)
@@ -54,6 +61,18 @@ function weather_mod.get_effects(climate)
 		table.insert(effects, name)
 		::continue::
 	end
-	minetest.log(dump2(effects, "effects"))
 	return effects
+end
+
+function weather_mod.handle_events(player, flags)
+	local ppos = player:get_pos()
+	if mod_lightning and weather_mod.settings.lightning and type(flags["lightning"]) ~= "nil" then
+		local random = rng:next(1, LIGHTNING_CHANCE)
+		if random == 1 then
+			lightning.strike(ppos)
+		end
+	end
+	if type(flags["damage"]) ~= "nil" then
+		weather_mod.damage_player(player, 1)
+	end
 end
