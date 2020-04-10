@@ -9,15 +9,17 @@ function weather_mod.get_heat(pos)
 	local base = weather_mod.settings.heat;
 	local biome = minetest.get_heat(pos)
 	local height = math.min(math.max(-pos.y / 15, -10), 10)
+	local time = weather_mod.get_time_heat()
+	local date = weather_mod.get_calendar_heat()
 	local random = weather_mod.state.heat;
-	return (base + biome + height) * random
+	return (base + biome + height) * time * date + random
 end
 
 function weather_mod.get_humidity(pos)
 	local base = weather_mod.settings.humidity
 	local biome = minetest.get_humidity(pos)
 	local random = weather_mod.state.humidity;
-	return (base + biome) * random
+	return (base + biome) + random
 end
 
 function weather_mod.get_climate(pos)

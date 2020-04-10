@@ -1,5 +1,5 @@
 local GSCYCLE = 0.05
-local RECALCCYCLE = 1
+local RECALCCYCLE = 0
 
 weather_mod.weathers = {}
 function weather_mod.register_effect(name, config, override)
@@ -91,7 +91,7 @@ local function handle_weather_effects(player)
 
 		local outdoors = weather_mod.is_outdoors(player)
 		if type(config.particles) ~= "nil" and outdoors then
-			spawn_particles(player, config.particles, wind)
+			spawn_particles(player, config.particles, weather_mod.state.wind)
 		end
 		if type(config.sound) ~= "nil" and outdoors then
 			sounds[effect] = config.sound
@@ -116,6 +116,7 @@ minetest.register_globalstep(function(dtime)
 		handle_weather_effects(player)
 		if timer >= RECALCCYCLE then
 			weather_mod.set_clouds(player)
+			weather_mod.set_headwind(player)
 		end
 	end
 	timer = 0

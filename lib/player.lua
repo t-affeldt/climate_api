@@ -4,7 +4,7 @@ local mod_playerphysics = minetest.get_modpath("playerphysics") ~= nil
 function weather_mod.add_physics(player, effect, value)
 	local id = weather_mod.modname .. ":" .. effect
 	if mod_player_monoids then
-		player_monoids[effect].add_change(player, value, id)
+		player_monoids[effect]:add_change(player, value, id)
 	elseif mod_playerphysics then
 		playerphysics.add_physics_factor(player, effect, id, value)
 	else
@@ -17,7 +17,7 @@ end
 function weather_mod.remove_physics(player, effect)
 	local id = weather_mod.modname .. ":" .. effect
 	if mod_player_monoids then
-		player_monoids[effect].del_change(player, id)
+		player_monoids[effect]:del_change(player, id)
 	elseif mod_playerphysics then
 		playerphysics.remove_physics_factor(player, effect, id)
 	else
@@ -88,5 +88,5 @@ function weather_mod.damage_player(player, amount, reason)
 		return
 	end
 	local hp = player:get_hp()
-	player:set_hp(current_hp - amount, reason)
+	player:set_hp(hp - amount, reason)
 end

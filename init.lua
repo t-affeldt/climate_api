@@ -33,16 +33,15 @@ weather_mod.settings = {
 	min_height	= getNumericSetting("min_height", -50)
 }
 
-weather_mod.state = {
-	heat = 1,
-	humidity = 1,
-	wind = vector.new(0, 0, -0.25)
-}
+dofile(weather_mod.modpath.."/lib/datastorage.lua")
+weather_mod.state = weather_mod.get_storage()
 
 -- import core API
 dofile(weather_mod.modpath.."/lib/player.lua")
 dofile(weather_mod.modpath.."/lib/environment.lua")
 dofile(weather_mod.modpath.."/lib/wind.lua")
+dofile(weather_mod.modpath.."/lib/calendar_dictionary.lua")
+dofile(weather_mod.modpath.."/lib/calendar.lua")
 dofile(weather_mod.modpath.."/lib/main.lua")
 dofile(weather_mod.modpath.."/lib/commands.lua")
 

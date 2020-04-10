@@ -1,10 +1,5 @@
 default
+datastorage?
 lightning?
-farming?
-flowers?
-flowers_plus?
-bakedclay?
-moreplants?
-lemontree?
 player_monoids?
 playerphysics?
