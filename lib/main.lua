@@ -1,5 +1,5 @@
 local GSCYCLE = 0.05
-local RECALCCYCLE = 0
+local RECALCCYCLE = 0.2
 
 weather_mod.weathers = {}
 function weather_mod.register_effect(name, config, override)
@@ -117,6 +117,7 @@ minetest.register_globalstep(function(dtime)
 		if timer >= RECALCCYCLE then
 			weather_mod.set_clouds(player)
 			weather_mod.set_headwind(player)
+			weather_mod.handle_time_progression()
 		end
 	end
 	timer = 0

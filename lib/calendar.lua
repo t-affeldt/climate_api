@@ -14,5 +14,5 @@ function weather_mod.handle_time_progression()
 	if time < weather_mod.state.time.last_check then
 		weather_mod.state.time.day = weather_mod.state.time.day + 1
 	end
-	weather_mod.state.last_check = time
+	weather_mod.state.time.last_check = time
 end

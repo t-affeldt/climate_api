@@ -3,6 +3,13 @@ minetest.register_privilege("weather", {
 	give_to_singleplayer = false
 })
 
+minetest.register_chatcommand("date", {
+	func = function(playername, param)
+		local date = weather_mod.print_date()
+		minetest.chat_send_player(playername, date)
+	end
+})
+
 -- Force a weather effect to override environment
 minetest.register_chatcommand("set_weather", {
 	params = "<weather>",
