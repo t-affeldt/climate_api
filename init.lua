@@ -1,56 +1,42 @@
-assert(minetest.add_particlespawner, "Believable Weather requires a more current version of Minetest")
-weather_mod = {}
+assert(minetest.add_particlespawner, "[Climate API] This mod requires a more current version of Minetest")
 
-weather_mod.modname = "believable_weather"
-weather_mod.modpath = minetest.get_modpath(weather_mod.modname)
+climate_api = {}
+climate_mod = {}
+
+local modname = minetest.get_current_modname()
+local modpath = minetest.get_modpath(modname)
 
 local function getBoolSetting(name, default)
-	return minetest.is_yes(minetest.settings:get_bool(weather_mod.modname .. "_" .. name) or default)
+	return minetest.is_yes(minetest.settings:get_bool("climate_api_" .. name) or default)
 end
 
 local function getNumericSetting(name, default)
-	return tonumber(minetest.settings:get(weather_mod.modname .. "_" .. name) or default)
+	return tonumber(minetest.settings:get("climate_api_" .. name) or default)
 end
 
 -- load settings from config file
-weather_mod.settings = {
-	damage			= getBoolSetting("damage", true),
+climate_mod.settings = {
 	particles		= getBoolSetting("particles", true),
-	leaves			= getBoolSetting("leaves", true),
-	snow				= getBoolSetting("snow_layers", true),
-	puddles			= getBoolSetting("puddles", true),
 	skybox			= getBoolSetting("skybox", true),
-	raycasting	= getBoolSetting("raycasting", true),
+	sound				= getBoolSetting("sound", true),
 	wind				= getBoolSetting("wind", true),
-	wind_slow		= getBoolSetting("wind_slow", true),
-	flowers			= getBoolSetting("flowers", true),
-	fruit				= getBoolSetting("fruit", true),
-	soil				= getBoolSetting("soil", true),
 	seasons			= getBoolSetting("seasons", true),
-	heat				= getNumericSetting("base_heat", 0),
-	humidity		= getNumericSetting("base_humidity", 0),
-	max_height	= getNumericSetting("max_height", 120),
-	min_height	= getNumericSetting("min_height", -50)
+	heat				= getNumericSetting("heat_base", 0),
+	humidity		= getNumericSetting("humidity_base", 0)
 }
 
-dofile(weather_mod.modpath.."/lib/datastorage.lua")
-weather_mod.state = weather_mod.get_storage()
+climate_mod.current_weather = {}
+climate_mod.current_effects = {}
 
 -- import core API
-dofile(weather_mod.modpath.."/lib/player.lua")
-dofile(weather_mod.modpath.."/lib/environment.lua")
-dofile(weather_mod.modpath.."/lib/wind.lua")
-dofile(weather_mod.modpath.."/lib/calendar_dictionary.lua")
-dofile(weather_mod.modpath.."/lib/calendar.lua")
-dofile(weather_mod.modpath.."/lib/main.lua")
-dofile(weather_mod.modpath.."/lib/commands.lua")
+climate_mod.state = dofile(modpath .. "/lib/datastorage.lua")
+climate_api = dofile(modpath .. "/lib/api.lua")
+climate_api.utility = dofile(modpath .. "/lib/api_utility.lua")
+climate_api.environment = dofile(modpath .. "/lib/environment.lua")
+climate_mod.world = dofile(modpath .. "/lib/world.lua")
+climate_mod.trigger = dofile(modpath .. "/lib/trigger.lua")
+dofile(modpath.."/lib/main.lua")
 
--- import individual weather types
-dofile(weather_mod.modpath.."/weathers/rain.lua")
-dofile(weather_mod.modpath.."/weathers/rain_heavy.lua")
-dofile(weather_mod.modpath.."/weathers/snow.lua")
-dofile(weather_mod.modpath.."/weathers/snow_heavy.lua")
-dofile(weather_mod.modpath.."/weathers/storm.lua")
-dofile(weather_mod.modpath.."/weathers/sandstorm.lua")
-dofile(weather_mod.modpath.."/weathers/hail.lua")
-dofile(weather_mod.modpath.."/weathers/pollen.lua")
+-- import predefined environment effects
+dofile(modpath .. "/ca_effects/particles.lua")
+dofile(modpath .. "/ca_effects/skybox.lua")

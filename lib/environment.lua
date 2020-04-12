@@ -1,80 +1,36 @@
-local mod_lightning = minetest.get_modpath("lightning")
+local environment = {}
 
-local LIGHTNING_CHANCE = 1000
-if mod_lightning then
-   lightning.auto = false
+local function get_heat_time()
+	local time = minetest.get_timeofday()
+	return climate_api.utility.normalized_cycle(time) * 0.4 + 0.3
 end
 
-function weather_mod.get_heat(pos)
-	local base = weather_mod.settings.heat;
+local function get_heat_calendar()
+	-- European heat center in August instead of June
+	local day = climate_mod.state:get("time_current_day")
+	local progression = ((day + 61) % 365) / 365
+	return climate_api.utility.normalized_cycle(progression) * 0.4 + 0.3
+end
+
+local function get_heat_height(y)
+	return climate_api.utility.rangelim(-y / 15, -10, 10)
+end
+
+function environment.get_heat(pos)
+	local base = climate_mod.settings.heat
 	local biome = minetest.get_heat(pos)
-	local height = math.min(math.max(-pos.y / 15, -10), 10)
-	local time = weather_mod.get_time_heat()
-	local date = weather_mod.get_calendar_heat()
-	local random = weather_mod.state.heat;
-	return (base + biome + height) * time * date + random
+	local height = get_heat_height(pos.y)
+	local time = get_heat_time()
+	local date = get_heat_calendar()
+	local random = climate_mod.state:get_int("heat_random");
+	return (base + biome + height) * time * date
 end
 
-function weather_mod.get_humidity(pos)
-	local base = weather_mod.settings.humidity
+function environment.get_humidity(pos)
+	local base = climate_mod.settings.humidity
 	local biome = minetest.get_humidity(pos)
-	local random = weather_mod.state.humidity;
-	return (base + biome) + random
+	local random = climate_mod.state:get_int("humidity_random");
+	return (base + biome)
 end
 
-function weather_mod.get_climate(pos)
-	local climate = {pos = pos}
-	climate.heat = weather_mod.get_heat(pos)
-	climate.humidity = weather_mod.get_humidity(pos)
-	climate.windspeed = vector.length(weather_mod.state.wind)
-	return climate
-end
-
-local function is_acceptable_weather_param(value, attr, config)
-	local min = config.conditions["min_" .. attr] or -math.huge
-	local max = config.conditions["max_" .. attr] or  math.huge
-	return value > min and value <= max
-end
-
-function weather_mod.get_effects(climate)
-	local forced_weather = weather_mod.state.current_weather
-	if type(forced_weather) ~= nil and forced_weather ~= "auto" then
-		return { forced_weather }
-	end
-	local params = {}
-	params.heat = climate.heat
-	params.humidity = climate.humidity
-	params.windspeed = vector.length(weather_mod.state.wind)
-	params.height = climate.pos.y
-
-	local effects = {}
-	local attributes = { "heat", "humidity", "windspeed", "height" }
-	for name, effect in pairs(weather_mod.weathers) do
-		if type(effect.config.conditions) == "nil" then
-			table.insert(effects, name)
-			goto continue
-		end
-
-		for _, attr in ipairs(attributes) do
-			if not is_acceptable_weather_param(params[attr], attr, effect.config) then
-				goto continue
-			end
-		end
-		table.insert(effects, name)
-		::continue::
-	end
-	return effects
-end
-
-function weather_mod.handle_events(player, flags)
-	local ppos = player:get_pos()
-	if mod_lightning and weather_mod.settings.lightning and type(flags["lightning"]) ~= "nil" then
-		local random = rng:next(1, LIGHTNING_CHANCE)
-		if random == 1 then
-			lightning.strike(ppos)
-		end
-	end
-	if type(flags["damage"]) ~= "nil" then
-		weather_mod.damage_player(player, 1)
-	end
-end
+return environment
