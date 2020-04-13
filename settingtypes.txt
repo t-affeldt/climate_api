@@ -6,3 +6,5 @@ climate_api_wind (Allow wind to angle rainfall) bool true
 climate_api_seasons (Change global temperature based on an annual cycle) bool true
 climate_api_heat_base (Global base temperature) float 0
 climate_api_humidity_base (Global base humidity) float 0
+climate_api_time_spread (Regulates how quickly the weather changes) float 1 0.1 10
+climate_api_particle_count (Multiplicator for used particles) float 1 0.1 2

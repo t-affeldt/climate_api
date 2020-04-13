@@ -16,13 +16,15 @@ end
 
 -- load settings from config file
 climate_mod.settings = {
-	particles		= getBoolSetting("particles", true),
-	skybox			= getBoolSetting("skybox", true),
-	sound				= getBoolSetting("sound", true),
-	wind				= getBoolSetting("wind", true),
-	seasons			= getBoolSetting("seasons", true),
-	heat				= getNumericSetting("heat_base", 0),
-	humidity		= getNumericSetting("humidity_base", 0)
+	particles				= getBoolSetting("particles", true),
+	skybox					= getBoolSetting("skybox", true),
+	sound						= getBoolSetting("sound", true),
+	wind						= getBoolSetting("wind", true),
+	seasons					= getBoolSetting("seasons", true),
+	heat						= getNumericSetting("heat_base", 0),
+	humidity				= getNumericSetting("humidity_base", 0),
+	time_spread			= getNumericSetting("time_spread", 1),
+	particle_count	= getNumericSetting("particle_count", 1)
 }
 
 climate_mod.current_weather = {}

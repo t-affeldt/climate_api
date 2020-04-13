@@ -1,5 +1,5 @@
-local GSCYCLE = 0
-local WORLD_CYCLE = 0
+local GSCYCLE = 0.01
+local WORLD_CYCLE = 0.5
 
 local gs_timer = 0
 local world_timer = 0

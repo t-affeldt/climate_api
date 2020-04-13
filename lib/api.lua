@@ -1,8 +1,8 @@
 local api = {}
 
-api.SHORT_CYCLE		= 0	-- for particles and fast animations
-api.DEFAULT_CYCLE	= 0	-- for most effect types
-api.LONG_CYCLE		= 0	-- for write operations and skybox changes
+api.SHORT_CYCLE		= 0.03	-- for particles and fast animations
+api.DEFAULT_CYCLE	= 0.1	-- for most effect types
+api.LONG_CYCLE		= 0.5	-- for write operations and skybox changes
 
 climate_mod.weathers = {}
 climate_mod.effects = {}

@@ -9,12 +9,13 @@ end
 
 local function spawn_particles(player, particles)
 	local ppos = player:getpos()
-	local wind_x = climate_mod.state:get_int("wind_x")
-	local wind_z = climate_mod.state:get_int("wind_z")
+	local wind_x = climate_mod.state:get_float("wind_x")
+	local wind_z = climate_mod.state:get_float("wind_z")
 	local wind = vector.new(wind_x, 0, wind_z)
 	local wind_pos = vector.multiply(wind, -1)
 	local wind_speed = vector.length(wind)
 
+	local amount = particles.amount * climate_mod.settings.particle_count
 	local texture = get_particle_texture(particles)
 
 	local minp = vector.add(vector.add(ppos, particles.min_pos), wind_pos)
@@ -31,7 +32,7 @@ local function spawn_particles(player, particles)
 	local vertical = math.abs(vector.normalize(vel).y) >= 0.6
 
 	minetest.add_particlespawner({
-		amount = particles.amount,
+		amount = amount,
 		time = 0.5,
 		minpos = minp,
 		maxpos = maxp,
@@ -53,7 +54,6 @@ end
 
 local function handle_effect(player_data)
 	for playername, data in pairs(player_data) do
-		minetest.chat_send_player(playername, "spam")
 		local player = minetest.get_player_by_name(playername)
 		for weather, value in pairs(data) do
 			spawn_particles(player, value)

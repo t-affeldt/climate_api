@@ -1,28 +1,26 @@
 local trigger = {}
 
-local function get_player_environment(player)
+function trigger.get_player_environment(player)
 	local ppos = player:get_pos()
-	local wind_x = climate_mod.state:get_int("wind_x")
-	local wind_z = climate_mod.state:get_int("wind_z")
+	local wind_x = climate_mod.state:get_float("wind_x")
+	local wind_z = climate_mod.state:get_float("wind_z")
 
 	local env = {}
 	env.player = player
-	env.pos = pos
+	env.pos = ppos
+	env.height = ppos.y
 	env.wind = vector.new(wind_x, 0, wind_z)
 	env.windspeed = vector.length(env.wind)
 	env.heat = climate_api.environment.get_heat(ppos)
 	env.humidity = climate_api.environment.get_humidity(ppos)
 	env.time = minetest.get_timeofday()
-	env.date = climate_mod.state:get_int("time_current_day")
+	env.date = minetest.get_day_count()
 	return env
 end
 
 local function test_condition(condition, env, goal)
 	local value = env[condition:sub(5)]
 	if condition:sub(1, 4) == "min_" then
-		for _, player in ipairs(minetest.get_connected_players()) do
-			minetest.chat_send_player(player:get_player_name(), dump2(value, goal))
-		end
 		return type(value) ~= "nil" and goal <= value
 	elseif condition:sub(1, 4) == "max_" then
 		return type(value) ~= "nil" and goal > value
@@ -54,7 +52,7 @@ end
 function trigger.get_active_effects()
 	local environments = {}
 	for _, player in ipairs(minetest.get_connected_players()) do
-		environments[player:get_player_name()] = get_player_environment(player)
+		environments[player:get_player_name()] = trigger.get_player_environment(player)
 	end
 
 	local effects = {}
