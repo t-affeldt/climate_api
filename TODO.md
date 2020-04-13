@@ -1,12 +1,8 @@
 # TODO
 
 ## Required for MVP
-- Fix obvious bugs that prevent weathers from being selected
-- Test if day progression works
 - Test non-random heat and humidity values
-- Fix noise function
-- Implement sounds
-- Test if sky changes are working
+- Re-implement sounds into new engine
 - Implement start/end events
 - Make sure all weather presets are working
 - Implement chat commands
@@ -20,13 +16,17 @@
 - Add license information to source files
 - Write helpful README
 - Find good values for weather conditions
-- Make switches between effects more smooth
+- Set effects on player join
 
 ## Nice to have
 - Write documentation on how to add weathers and effects
 - Register *Moon Phases* as a weather preset using the *skybox* effect
 - Assign meta data (like "downfall", "wind", etc.) to weather presets
 - Fog effects
+- Optimize performance by replacing some particles with animated texture planes
+- Make switches between effects more smooth
+- Adjust size of particle boxes based on player speed
+- Ability to register environment conditions dynamically (like the heat)
 
 ## Future Plans & Ideas
 - Complete season system

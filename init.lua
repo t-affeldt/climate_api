@@ -42,3 +42,4 @@ dofile(modpath.."/lib/main.lua")
 -- import predefined environment effects
 dofile(modpath .. "/ca_effects/particles.lua")
 dofile(modpath .. "/ca_effects/skybox.lua")
+dofile(modpath .. "/ca_effects/clouds.lua")

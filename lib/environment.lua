@@ -8,7 +8,7 @@ end
 local function get_heat_calendar()
 	-- European heat center in August instead of June
 	local day = minetest.get_day_count()
-	local progression = (day + 61) / 365
+	local progression = ((day + 61) % 365) / 365
 	return climate_api.utility.normalized_cycle(progression) * 0.6 + 0.7
 end
 

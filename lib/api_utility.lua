@@ -22,7 +22,7 @@ function utility.merge_tables(a, b)
 end
 
 -- see https://en.wikipedia.org/wiki/Logistic_function
-function utility.logistic_growth(value, max, growth, midpoint)
+function utility.sigmoid(value, max, growth, midpoint)
 	return max / (1 + math.exp(-growth * (value - midpoint)))
 end
 

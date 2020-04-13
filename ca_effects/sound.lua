@@ -11,4 +11,4 @@ local function update_effect(player_data)
 end
 
 climate_api.register_effect("climate_api:sound", update_effect, "change")
-climate_api.set_effect_cycle("climate_api:skybox", climate_api.LONG_CYCLE)
+climate_api.set_effect_cycle("climate_api:skybox", climate_api.MEDIUM_CYCLE)
