@@ -91,10 +91,54 @@ function trigger.get_active_effects()
 	return effects
 end
 
-function trigger.call_handlers(name, effect)
-	if type(effect) == "nil" then return end
-	for _, handler in ipairs(climate_mod.effects[name]["tick"]) do
-		handler(effect)
+function trigger.call_handlers(name, effect, prev_effect)
+	if effect == nil then effect = {} end
+	if prev_effect == nil then prev_effect = {} end
+
+	local starts = {}
+	local has_starts = false
+	local ticks = {current = {}, prev = {}}
+	local has_ticks = false
+	local stops = {}
+	local has_stops = false
+
+	for player, sources in pairs(effect) do
+		if type(prev_effect[player]) ~= "nil" then
+			has_ticks = true
+			ticks.current[player] = sources
+			ticks.prev[player] = prev_effect[player]
+			--prev_effect[player] = nil -- remove any found entries
+		else
+			has_starts = true
+			starts[player] = sources
+		end
+	end
+
+	for player, sources in pairs(prev_effect) do
+		if type(effect[player]) == "nil" then
+			stops[player] = sources
+			has_stops = true
+		end
+	end
+
+	if has_starts then
+		for _, handler in ipairs(climate_mod.effects[name]["start"]) do
+			handler(starts)
+		end
+	end
+
+	if has_ticks then
+		for _, handler in ipairs(climate_mod.effects[name]["tick"]) do
+			handler(ticks.current, ticks.prev)
+		end
+	end
+
+	-- remaining table lists ending effects
+	if has_stops then
+		minetest.log(dump2(name, "AAAAAAAAAAA"))
+		for _, handler in ipairs(climate_mod.effects[name]["stop"]) do
+			handler(stops)
+		end
 	end
 end
 

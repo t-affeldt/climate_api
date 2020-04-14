@@ -38,18 +38,21 @@ climate_mod.current_effects = {}
 climate_mod.weathers = {}
 climate_mod.effects = {}
 climate_mod.cycles = {}
+climate_mod.influences = {}
 
 -- import core API
 climate_mod.state = dofile(modpath .. "/lib/datastorage.lua")
 climate_api = dofile(modpath .. "/lib/api.lua")
 climate_api.utility = dofile(modpath .. "/lib/api_utility.lua")
 climate_api.environment = dofile(modpath .. "/lib/environment.lua")
+--climate_api = dofile(modpath .. "/lib/influences.lua")
 climate_mod.world = dofile(modpath .. "/lib/world.lua")
 climate_mod.trigger = dofile(modpath .. "/lib/trigger.lua")
 dofile(modpath.."/lib/main.lua")
 dofile(modpath.."/lib/commands.lua")
 
 -- import predefined environment effects
+dofile(modpath .. "/ca_effects/clouds.lua")
 dofile(modpath .. "/ca_effects/particles.lua")
 dofile(modpath .. "/ca_effects/skybox.lua")
-dofile(modpath .. "/ca_effects/clouds.lua")
+dofile(modpath .. "/ca_effects/sound.lua")

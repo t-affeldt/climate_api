@@ -31,5 +31,5 @@ local function remove_effect(player_data)
 end
 
 climate_api.register_effect("climate_api:skybox", handle_effect, "tick")
-climate_api.register_effect("climate_api:skybox", remove_effect, "end")
+climate_api.register_effect("climate_api:skybox", remove_effect, "stop")
 climate_api.set_effect_cycle("climate_api:skybox", climate_api.LONG_CYCLE)

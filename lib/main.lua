@@ -16,12 +16,13 @@ minetest.register_globalstep(function(dtime)
 		climate_mod.world.update_status(noise_timer)
 	end
 
+	local previous_effects = climate_mod.current_effects
 	climate_mod.current_effects = climate_mod.trigger.get_active_effects()
 
 	for name, effect in pairs(climate_mod.effects) do
 		if climate_mod.cycles[name].timespan < climate_mod.cycles[name].timer + dtime then
 			climate_mod.cycles[name].timer = 0
-			climate_mod.trigger.call_handlers(name, climate_mod.current_effects[name])
+			climate_mod.trigger.call_handlers(name, climate_mod.current_effects[name], previous_effects[name])
 		else
 			climate_mod.cycles[name].timer = climate_mod.cycles[name].timer + dtime
 		end

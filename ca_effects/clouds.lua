@@ -4,7 +4,7 @@ if not minetest.get_modpath("skylayer") then return end
 local SKYBOX_NAME = "climate_api:clouds"
 
 local function set_clouds(player, clouds)
-	sky = { name = SKYBOX_NAME, cloud_data = clouds }
+	local sky = { name = SKYBOX_NAME, cloud_data = clouds }
 	skylayer.add_layer(player:get_player_name(), sky)
 end
 
@@ -44,5 +44,5 @@ local function remove_effect(player_data)
 end
 
 climate_api.register_effect("climate_api:clouds", handle_effect, "tick")
-climate_api.register_effect("climate_api:clouds", remove_effect, "end")
+climate_api.register_effect("climate_api:clouds", remove_effect, "stop")
 climate_api.set_effect_cycle("climate_api:clouds", climate_api.LONG_CYCLE)

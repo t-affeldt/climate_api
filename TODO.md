@@ -2,21 +2,18 @@
 
 ## Required for MVP
 - Test non-random heat and humidity values
-- Re-implement sounds into new engine
-- Implement start/end events
 - Make sure all weather presets are working
-- Implement chat commands
 
 ## Planned for first release
 - Improve test_condition function
 - Implement ABM system for additional effects
 - Add light level to possible conditions
 - Implement fallback for sky changes without skylayer
-- Configurable number of days in a year
-- Add license information to source files
 - Write helpful README
 - Find good values for weather conditions
 - Set effects on player join
+- Improve value structures of particle and skybox effects
+- Make sounds adjust to changes by weather presets
 
 ## Nice to have
 - Write documentation on how to add weathers and effects
