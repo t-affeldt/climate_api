@@ -1,19 +1,23 @@
 # TODO
 
 ## Required for MVP
-- Test non-random heat and humidity values
+- Find good values for weather conditions
 - Make sure all weather presets are working
+- Add light level to possible conditions
+
+## Required for Beta
+- Implement fallback for sky changes without skylayer
+- Ability to register environment conditions dynamically (like the heat)
+- Implement ABM system for additional effects
+- Implement snow layers, puddles, soil hydration, fire extinguishing
 
 ## Planned for first release
 - Improve test_condition function
-- Implement ABM system for additional effects
-- Add light level to possible conditions
-- Implement fallback for sky changes without skylayer
 - Write helpful README
-- Find good values for weather conditions
 - Set effects on player join
 - Improve value structures of particle and skybox effects
 - Make sounds adjust to changes by weather presets
+- Ability to force set a wind speed via chat commands
 
 ## Nice to have
 - Write documentation on how to add weathers and effects
@@ -23,10 +27,9 @@
 - Optimize performance by replacing some particles with animated texture planes
 - Make switches between effects more smooth
 - Adjust size of particle boxes based on player speed
-- Ability to register environment conditions dynamically (like the heat)
 - Create conditions for time of day, annual progression, biome filters
-- Let rain extinguish flames
-- Ability to force toggle weather presets on / off with chat commands
+- Fork lightning so that it uses skylayer
+- Support for sail boats mod
 
 ## Future Plans & Ideas
 - Complete season system
@@ -35,6 +38,7 @@
 	- holidays and reminders via chat commands
 	- day/night cycle adjusted to season
 	- special events like a bloodmoon -> increased mob spawns
+	- water can freeze over in winter
 - Fantasy weather effects
 	- pretty skyboxes
 	- swirling flower petals, mushroom spores, etc. in fitting biomes

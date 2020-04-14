@@ -79,11 +79,54 @@ minetest.register_chatcommand("set_humidity", {
 
 minetest.register_chatcommand("weather_settings", {
 	description = "Print the active Climate API configuration",
-	privs = { weather = true },
 	func = function(playername)
 		minetest.chat_send_player(playername, "Current Settings\n================")
 		for setting, value in pairs(climate_mod.settings) do
 			minetest.chat_send_player(playername, dump2(value, setting))
+		end
+	end
+})
+
+minetest.register_chatcommand("set_weather", {
+	params ="<weather> <status>",
+	description ="Turn the specified weather preset on or off for all players or reset it to automatic",
+	privs = { weather = true },
+	func = function(playername, param)
+		local arguments = {}
+		for w in param:gmatch("%S+") do table.insert(arguments, w) end
+		local weather = arguments[1]
+		if climate_mod.weathers[weather] == nil then
+			minetest.chat_send_player(playername, "Unknown weather preset")
+			return
+		end
+		local status
+		if arguments[2] == "on" then
+			status = true
+		elseif arguments[2] == "off" then
+			status = false
+		elseif arguments[2] == "auto" then
+			status = nil
+		else
+			minetest.chat_send_player(playername, "Invalid weather status. Set the preset to either on, off or auto.")
+			return
+		end
+		climate_mod.forced_weather[weather] = status
+		minetest.chat_send_player(playername, "Weather " .. weather .. " successfully set to " .. arguments[2])
+	end
+})
+
+minetest.register_chatcommand("weather_status", {
+	description = "Prints which weather presets are enforced or disabled",
+	func = function(playername)
+		minetest.chat_send_player(playername, "Current activation rules:\n================")
+		for weather, _ in pairs(climate_mod.weathers) do
+			local status = "auto"
+			if climate_mod.forced_weather[weather] == true then
+				status = "on"
+			elseif climate_mod.forced_weather[weather] == false then
+				status = "off"
+			end
+			minetest.chat_send_player(playername, dump2(status, weather))
 		end
 	end
 })

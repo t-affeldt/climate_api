@@ -30,11 +30,15 @@ local function test_condition(condition, env, goal)
 	end
 end
 
-local function is_weather_active(player, weather_config, env)
-	if type(weather_config.conditions) == "function" then
-		return weather_config.conditions(env)
+local function is_weather_active(player, weather, env)
+	if climate_mod.forced_weather[weather] ~= nil then
+		return climate_mod.forced_weather[weather]
 	end
-	for condition, goal in pairs(weather_config.conditions) do
+	local config = climate_mod.weathers[weather]
+	if type(config.conditions) == "function" then
+		return config.conditions(env)
+	end
+	for condition, goal in pairs(config.conditions) do
 		if not test_condition(condition, env, goal) then
 			return false
 		end
@@ -70,7 +74,7 @@ function trigger.get_active_effects()
 		for _, player in ipairs(minetest.get_connected_players()) do
 			local pname = player:get_player_name()
 			local env = environments[pname]
-			if is_weather_active(player, wconfig, env) then
+			if is_weather_active(player, wname, env) then
 				if type(climate_mod.current_weather[pname]) == "nil" then
 					climate_mod.current_weather[pname] = {}
 				end

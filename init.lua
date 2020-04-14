@@ -33,12 +33,13 @@ climate_mod.settings = {
 }
 
 -- initiate empty registers
-climate_mod.current_weather = {}
-climate_mod.current_effects = {}
 climate_mod.weathers = {}
 climate_mod.effects = {}
 climate_mod.cycles = {}
 climate_mod.influences = {}
+climate_mod.current_weather = {}
+climate_mod.current_effects = {}
+climate_mod.forced_weather = {}
 
 -- import core API
 climate_mod.state = dofile(modpath .. "/lib/datastorage.lua")
