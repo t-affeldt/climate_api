@@ -27,13 +27,16 @@
 - Make switches between effects more smooth
 - Adjust size of particle boxes based on player speed
 - Ability to register environment conditions dynamically (like the heat)
+- Create conditions for time of day, annual progression, biome filters
+- Let rain extinguish flames
+- Ability to force toggle weather presets on / off with chat commands
 
 ## Future Plans & Ideas
 - Complete season system
 	- crops grow better in their respective season or worse in winter
 	- regrowing apples, lemons, etc. in their respective months
 	- holidays and reminders via chat commands
-	- day/night nycle adjusted to season
+	- day/night cycle adjusted to season
 	- special events like a bloodmoon -> increased mob spawns
 - Fantasy weather effects
 	- pretty skyboxes

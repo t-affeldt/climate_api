@@ -24,12 +24,6 @@ end
 local function handle_effect(player_data)
 	for playername, data in pairs(player_data) do
 		local player = minetest.get_player_by_name(playername)
-
-		local data = player.get_meta()
-		local current_size = data.get_float("climate_api:cloud_size")
-		local current_speed_x = data.get_float("climate_api:cloud_speed_x")
-		local current_speed_z = data.get_float("climate_api:cloud_speed_z")
-
 		local clouds = {}
 		for weather, value in pairs(data) do
 			clouds.size = accumulate(clouds.size, data.size, function(a, b) return a * b end)

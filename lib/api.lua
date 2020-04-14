@@ -5,10 +5,6 @@ api.DEFAULT_CYCLE	=  0.1	-- for most effect types
 api.MEDIUM_CYCKE	=	 2.0	-- for ressource intensive tasks
 api.LONG_CYCLE		=  5.0	-- for write operations and skybox changes
 
-climate_mod.weathers = {}
-climate_mod.effects = {}
-climate_mod.cycles = {}
-
 function api.register_weather(name, conditions, effects)
 	-- TODO: check and sanitize
 	climate_mod.weathers[name] = {
