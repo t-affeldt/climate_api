@@ -3,7 +3,6 @@
 ## Required for MVP
 - Find good values for weather conditions
 - Make sure all weather presets are working
-- Add light level to possible conditions
 
 ## Required for Beta
 - Implement fallback for sky changes without skylayer

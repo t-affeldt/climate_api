@@ -15,6 +15,7 @@ function trigger.get_player_environment(player)
 	env.humidity = climate_api.environment.get_humidity(ppos)
 	env.time = minetest.get_timeofday()
 	env.date = minetest.get_day_count()
+	env.light = minetest.get_node_light(vector.add(ppos, vector.new({x=0,y=1.5,z=0})), 0.5)
 	return env
 end
 

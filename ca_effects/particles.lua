@@ -1,5 +1,7 @@
 if not climate_mod.settings.particles then return end
 
+local EFFECT_NAME = "climate_api:particles"
+
 local function get_particle_texture(particles)
 	if type(particles.textures) == "nil" or next(particles.textures) == nil then
 		return particles.texture
@@ -61,5 +63,5 @@ local function handle_effect(player_data)
 	end
 end
 
-climate_api.register_effect("climate_api:particles", handle_effect, "tick")
-climate_api.set_effect_cycle("climate_api:particles", climate_api.SHORT_CYCLE)
+climate_api.register_effect(EFFECT_NAME, handle_effect, "tick")
+climate_api.set_effect_cycle(EFFECT_NAME, climate_api.SHORT_CYCLE)
