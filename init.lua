@@ -6,13 +6,13 @@ climate_mod = {}
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 
-local function getBoolSetting(name, default)
+local function get_setting_bool(name, default)
 	local value = minetest.settings:get_bool("climate_api_" .. name)
 	if type(value) == "nil" then value = default end
 	return minetest.is_yes(value)
 end
 
-local function getNumericSetting(name, default)
+local function get_setting_number(name, default)
 	local value = minetest.settings:get("climate_api_" .. name)
 	if type(value) == "nil" then value = default end
 	return tonumber(value)
@@ -20,16 +20,17 @@ end
 
 -- load settings from config file
 climate_mod.settings = {
-	particles				= getBoolSetting("particles", true),
-	skybox					= getBoolSetting("skybox", true),
-	sound						= getBoolSetting("sound", true),
-	wind						= getBoolSetting("wind", true),
-	seasons					= getBoolSetting("seasons", true),
-	fahrenheit			= getBoolSetting("fahrenheit", false),
-	heat						= getNumericSetting("heat_base", 0),
-	humidity				= getNumericSetting("humidity_base", 0),
-	time_spread			= getNumericSetting("time_spread", 1),
-	particle_count	= getNumericSetting("particle_count", 1)
+	particles				= get_setting_bool("particles", true),
+	skybox					= get_setting_bool("skybox", true),
+	sound						= get_setting_bool("sound", true),
+	hud_overlay			= get_setting_bool("hud_overlay", true),
+	wind						= get_setting_bool("wind", true),
+	seasons					= get_setting_bool("seasons", true),
+	fahrenheit			= get_setting_bool("fahrenheit", false),
+	heat						= get_setting_number("heat_base", 0),
+	humidity				= get_setting_number("humidity_base", 0),
+	time_spread			= get_setting_number("time_spread", 1),
+	particle_count	= get_setting_number("particle_count", 1)
 }
 
 -- initiate empty registers

@@ -1,7 +1,7 @@
 climate_api_particles (Show particle effects) bool true
 climate_api_skybox (Allow weather effects to modify the skybox) bool true
 climate_api_sound (Allow weather presets to play ambient sounds) bool true
-climate_api_clouds (Override clouds to represent current humidity) bool true
+climate_api_hud_overlay (Allow weather presets to display a HUD overlay) bool true
 climate_api_wind (Allow wind to angle rainfall) bool true
 climate_api_seasons (Change global temperature based on an annual cycle) bool true
 climate_api_heat_base (Global base temperature) float 0

@@ -37,4 +37,41 @@ end
 	climate_mod.influences[name] = func
 end]]
 
+function api.register_abm(config)
+	local conditions = config.conditions
+	local action = config.action
+	local pos_override = config.pos_override
+
+	local override = function(pos, node)
+		local env = climate_mod.trigger.get_position_environment(pos)
+		if type(pos_override) == "function" then
+			pos = pos_override(pos)
+		end
+
+		if conditions == nil then
+			return action(pos, node, env)
+		end
+
+		minetest.log(dump2(env, "env"))
+		minetest.log(dump2(conditions, "conditions"))
+
+		for condition, goal in pairs(conditions) do
+			local value = env[condition:sub(5)]
+			if condition:sub(1, 4) == "min_" then
+				if type(value) == "nil" or goal > value then return end
+			elseif condition:sub(1, 4) == "max_" then
+				if type(value) == "nil" or goal <= value then return end
+			else
+				value = env[condition]
+				if type(value) == "nil" or goal ~= value then return end
+			end
+		end
+		return action(pos, node, env)
+	end
+
+	config.conditions = nil
+	config.action = override
+	minetest.register_abm(config)
+end
+
 return api

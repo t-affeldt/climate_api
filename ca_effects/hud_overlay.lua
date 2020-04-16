@@ -1,4 +1,4 @@
-if not climate_mod.settings.sound then return end
+if not climate_mod.settings.hud_overlay then return end
 
 local EFFECT_NAME = "climate_api:hud_overlay"
 

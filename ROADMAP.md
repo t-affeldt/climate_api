@@ -5,10 +5,7 @@
 - Make sure all weather presets are working
 
 ## Required for Beta
-- Implement fallback for sky changes without skylayer
 - Ability to register environment conditions dynamically (like the heat)
-- Implement ABM system for additional effects
-- Implement snow layers, puddles, soil hydration, fire extinguishing
 
 ## Planned for first release
 - Improve test_condition function
@@ -20,7 +17,6 @@
 
 ## Nice to have
 - Write documentation on how to add weathers and effects
-- Register *Moon Phases* as a weather preset using the *skybox* effect
 - Assign meta data (like "downfall", "wind", etc.) to weather presets
 - Fog effects
 - Optimize performance by replacing some particles with animated texture planes
