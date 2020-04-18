@@ -18,6 +18,7 @@
 - Make switches between effects more smooth
 - Adjust size of particle boxes based on player speed
 - Create conditions for time of day, annual progression, biome filters
+- Generate wind based on speed and yaw instead of x and z values
 
 ## Future Plans & Ideas
 - Complete season system

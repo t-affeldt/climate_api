@@ -2,8 +2,16 @@ climate_api.register_influence("heat", function(pos)
 	return climate_api.environment.get_heat(pos)
 end)
 
+climate_api.register_influence("base_heat", function(pos)
+	return minetest.get_heat(pos)
+end)
+
 climate_api.register_influence("humidity", function(pos)
 	return climate_api.environment.get_humidity(pos)
+end)
+
+climate_api.register_influence("base_humidity", function(pos)
+	return minetest.get_humidity(pos)
 end)
 
 climate_api.register_influence("biome", function(pos)
