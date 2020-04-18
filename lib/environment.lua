@@ -34,6 +34,12 @@ function environment.get_humidity(pos)
 	return (base + biome * 0.7 + random_base * 0.3) * random
 end
 
+function environment.get_wind()
+	local wind_x = climate_mod.state:get_float("wind_x")
+	local wind_z = climate_mod.state:get_float("wind_z")
+	return vector.new({ x = wind_x, y = 0, z = wind_z })
+end
+
 function environment.get_weather_presets(player)
 	local pname = player:get_player_name()
 	local weathers = climate_mod.current_weather[pname]
