@@ -77,6 +77,32 @@ minetest.register_chatcommand("set_humidity", {
 	end
 })
 
+minetest.register_chatcommand("set_wind", {
+	params = "<wind>",
+	description = "Override the weather algorithm's windspeed",
+	privs = { weather = true },
+	func = function(playername, param)
+		if param == nil or param == "" then
+			minetest.chat_send_player(playername, "Provide a number to modify the base humidity")
+			return
+		end
+		local arguments = {}
+		for w in param:gmatch("%S+") do table.insert(arguments, w) end
+		local wind_x = arguments[1]
+		local wind_z = arguments[2]
+		if wind_x == "auto" then
+			climate_mod.forced_wind = nil
+		else
+			climate_mod.forced_wind = vector.new({
+				x = tonumber(wind_x),
+				y = 0,
+				z = tonumber(wind_z)
+			})
+		end
+		minetest.chat_send_player(playername, "Wind changed")
+	end
+})
+
 minetest.register_chatcommand("weather_settings", {
 	description = "Print the active Climate API configuration",
 	func = function(playername)

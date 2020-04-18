@@ -4,15 +4,11 @@
 - Find good values for weather conditions
 - Make sure all weather presets are working
 
-## Required for Beta
-- Ability to register environment conditions dynamically (like the heat)
-
 ## Planned for first release
 - Write helpful README
 - Set effects on player join
 - Improve value structures of particle and skybox effects
 - Make sounds adjust to changes by weather presets
-- Ability to force set a wind speed via chat commands
 
 ## Nice to have
 - Write documentation on how to add weathers and effects
@@ -22,7 +18,6 @@
 - Make switches between effects more smooth
 - Adjust size of particle boxes based on player speed
 - Create conditions for time of day, annual progression, biome filters
-- Support for sail boats mod
 
 ## Future Plans & Ideas
 - Complete season system

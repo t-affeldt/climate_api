@@ -6,7 +6,7 @@ local function get_heat_time()
 end
 
 local function get_heat_calendar()
-	-- European heat center in August instead of June
+	-- heat center in August instead of June
 	local day = minetest.get_day_count()
 	local progression = ((day + 61) % 365) / 365
 	return climate_api.utility.normalized_cycle(progression) * 0.6 + 0.7
@@ -35,6 +35,9 @@ function environment.get_humidity(pos)
 end
 
 function environment.get_wind()
+	if climate_mod.forced_wind ~= nil then
+		return climate_mod.forced_wind
+	end
 	local wind_x = climate_mod.state:get_float("wind_x")
 	local wind_z = climate_mod.state:get_float("wind_z")
 	return vector.new({ x = wind_x, y = 0, z = wind_z })

@@ -31,7 +31,8 @@ climate_mod.settings = {
 	humidity				= get_setting_number("humidity_base", 0),
 	time_spread			= get_setting_number("time_spread", 1),
 	particle_count	= get_setting_number("particle_count", 1),
-	tick_speed			= get_setting_number("tick_speed", 1)
+	tick_speed			= get_setting_number("tick_speed", 1),
+	volume					= get_setting_number("volume", 1)
 }
 
 -- initiate empty registers
@@ -42,6 +43,7 @@ climate_mod.influences = {}
 climate_mod.current_weather = {}
 climate_mod.current_effects = {}
 climate_mod.forced_weather = {}
+climate_mod.forced_wind = nil
 
 -- import core API
 climate_mod.state = dofile(modpath .. "/lib/datastorage.lua")

@@ -10,3 +10,4 @@ climate_api_time_spread (Regulates how quickly the weather changes) float 1 0.1 
 climate_api_particle_count (Multiplicator for used particles) float 1 0.1 2
 climate_api_fahrenheit (Show degrees in Fahrenheit instead of Celsius) bool false
 climate_api_tick_speed (Update speed of weather effects) float 1 0.1 10
+climate_api_volume (Volume of sound effects) float 1 0 10

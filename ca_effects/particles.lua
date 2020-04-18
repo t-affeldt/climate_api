@@ -11,17 +11,10 @@ end
 
 local function spawn_particles(player, particles)
 	local ppos = player:getpos()
-	local wind_x = climate_mod.state:get_float("wind_x")
-	local wind_z = climate_mod.state:get_float("wind_z")
-	local wind = vector.new(wind_x, 0, wind_z)
-	local wind_pos = vector.multiply(wind, -1)
-	local wind_speed = vector.length(wind)
+	local wind = climate_api.environment.get_wind()
 
 	local amount = particles.amount * climate_mod.settings.particle_count
 	local texture = get_particle_texture(particles)
-
-	local minp = vector.add(vector.add(ppos, particles.min_pos), wind_pos)
-	local maxp = vector.add(vector.add(ppos, particles.max_pos), wind_pos)
 
 	local vel = vector.new({
 		x = wind.x,
@@ -29,6 +22,14 @@ local function spawn_particles(player, particles)
 		z = wind.z
 	})
 	local acc = vector.new({x=0, y=0, z=0})
+
+	local wind_pos = vector.multiply(
+		vector.normalize(vel),
+		-vector.length(wind)
+	)
+	wind_pos.y = 0
+	local minp = vector.add(vector.add(ppos, particles.min_pos), wind_pos)
+	local maxp = vector.add(vector.add(ppos, particles.max_pos), wind_pos)
 
 	local exp = particles.exptime
 	local vertical = math.abs(vector.normalize(vel).y) >= 0.6

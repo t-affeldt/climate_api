@@ -13,17 +13,14 @@ climate_api.register_influence("biome", function(pos)
 end)
 
 climate_api.register_influence("windspeed", function(_)
-	local wind_x = climate_mod.state:get_float("wind_x")
-	local wind_z = climate_mod.state:get_float("wind_z")
-	return vector.length({x = wind_x, y = 0, z = wind_z})
+	local wind = climate_api.environment.get_wind()
+	return vector.length(wind)
 end)
 
-climate_api.register_influence("wind_x", function(_)
-	return climate_mod.state:get_float("wind_x")
-end)
-
-climate_api.register_influence("wind_z", function(_)
-	return climate_mod.state:get_float("wind_z")
+climate_api.register_influence("wind_yaw", function(_)
+	local wind = climate_api.environment.get_wind()
+	if vector.length(wind) == 0 then return 0 end
+	return minetest.dir_to_yaw(wind)
 end)
 
 climate_api.register_influence("height", function(pos)
