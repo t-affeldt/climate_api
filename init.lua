@@ -30,7 +30,8 @@ climate_mod.settings = {
 	heat						= get_setting_number("heat_base", 0),
 	humidity				= get_setting_number("humidity_base", 0),
 	time_spread			= get_setting_number("time_spread", 1),
-	particle_count	= get_setting_number("particle_count", 1)
+	particle_count	= get_setting_number("particle_count", 1),
+	tick_speed			= get_setting_number("tick_speed", 1)
 }
 
 -- initiate empty registers
@@ -46,6 +47,7 @@ climate_mod.forced_weather = {}
 climate_mod.state = dofile(modpath .. "/lib/datastorage.lua")
 climate_api = dofile(modpath .. "/lib/api.lua")
 climate_api.utility = dofile(modpath .. "/lib/api_utility.lua")
+dofile(modpath .. "/lib/influences.lua")
 climate_api.environment = dofile(modpath .. "/lib/environment.lua")
 --climate_api = dofile(modpath .. "/lib/influences.lua")
 climate_mod.world = dofile(modpath .. "/lib/world.lua")

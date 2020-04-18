@@ -4,7 +4,7 @@ function trigger.get_position_environment(pos)
 	local wind_x = climate_mod.state:get_float("wind_x")
 	local wind_z = climate_mod.state:get_float("wind_z")
 
-	local env = {}
+	--[[local env = {}
 	env.pos = pos
 	env.height = pos.y
 	env.wind = vector.new(wind_x, 0, wind_z)
@@ -13,7 +13,11 @@ function trigger.get_position_environment(pos)
 	env.humidity = climate_api.environment.get_humidity(pos)
 	env.time = minetest.get_timeofday()
 	env.date = minetest.get_day_count()
-	env.light = minetest.get_node_light(vector.add(pos, vector.new({x=0,y=1,z=0})), 0.5)
+	env.light = minetest.get_node_light(vector.add(pos, vector.new({x=0,y=1,z=0})), 0.5)]]
+	local env = {}
+	for influence, func in pairs(climate_mod.influences) do
+		env[influence] = func(pos)
+	end
 	return env
 end
 
@@ -24,15 +28,21 @@ function trigger.get_player_environment(player)
 	return env
 end
 
-local function test_condition(condition, env, goal)
+function trigger.test_condition(condition, env, goal)
 	local value = env[condition:sub(5)]
 	if condition:sub(1, 4) == "min_" then
 		return type(value) ~= "nil" and goal <= value
 	elseif condition:sub(1, 4) == "max_" then
 		return type(value) ~= "nil" and goal > value
-	else
-		Minetest.log("warning", "[Climate API] Invalid effect condition")
+	elseif condition:sub(1, 4) == "has_" then
+		if type(value) == "nil" then return false end
+		for _, g in ipairs(goal) do
+			if value == g then return true end
+		end
 		return false
+	else
+		value = env[condition]
+		return type(value) ~= "nil" and goal == value
 	end
 end
 
@@ -45,7 +55,7 @@ local function is_weather_active(player, weather, env)
 		return config.conditions(env)
 	end
 	for condition, goal in pairs(config.conditions) do
-		if not test_condition(condition, env, goal) then
+		if not trigger.test_condition(condition, env, goal) then
 			return false
 		end
 	end

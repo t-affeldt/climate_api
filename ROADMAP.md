@@ -8,7 +8,6 @@
 - Ability to register environment conditions dynamically (like the heat)
 
 ## Planned for first release
-- Improve test_condition function
 - Write helpful README
 - Set effects on player join
 - Improve value structures of particle and skybox effects
@@ -23,7 +22,6 @@
 - Make switches between effects more smooth
 - Adjust size of particle boxes based on player speed
 - Create conditions for time of day, annual progression, biome filters
-- Fork lightning so that it uses skylayer
 - Support for sail boats mod
 
 ## Future Plans & Ideas

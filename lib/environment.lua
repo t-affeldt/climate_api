@@ -31,13 +31,6 @@ function environment.get_humidity(pos)
 	local biome = minetest.get_humidity(pos)
 	local random = climate_mod.state:get_float("humidity_random");
 	local random_base = climate_mod.state:get_float("humidity_base");
-	--[[for _, player in ipairs(minetest.get_connected_players()) do
-		local pname = player:get_player_name()
-		minetest.chat_send_player(pname, dump2(biome, "biome"))
-		minetest.chat_send_player(pname, dump2(random_base, "random_base"))
-		minetest.chat_send_player(pname, dump2(random, "random"))
-		minetest.chat_send_player(pname, dump2((base + biome * 0.7 + random_base * 0.3) * random, "total"))
-	end]]
 	return (base + biome * 0.7 + random_base * 0.3) * random
 end
 

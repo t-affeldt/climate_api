@@ -3,6 +3,7 @@ if not climate_mod.settings.skybox then return end
 local EFFECT_NAME = "climate_api:skybox"
 
 local function set_skybox(player, sky)
+	if not player.get_stars then return end
 	if sky.sky_data ~= nil then
 		player:set_sky(sky.sky_data)
 	end
@@ -21,6 +22,7 @@ local function set_skybox(player, sky)
 end
 
 local function remove_skybox(player)
+	if not player.get_stars then return end
 	player:set_sky({ type = "regular", clouds = true})
 end
 

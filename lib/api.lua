@@ -33,9 +33,9 @@ function api.set_effect_cycle(name, cycle)
 	climate_mod.cycles[name].timespan = cycle
 end
 
---[[function api.register_influence(name, func)
+function api.register_influence(name, func)
 	climate_mod.influences[name] = func
-end]]
+end
 
 function api.register_abm(config)
 	local conditions = config.conditions
@@ -52,19 +52,9 @@ function api.register_abm(config)
 			return action(pos, node, env)
 		end
 
-		minetest.log(dump2(env, "env"))
-		minetest.log(dump2(conditions, "conditions"))
-
 		for condition, goal in pairs(conditions) do
-			local value = env[condition:sub(5)]
-			if condition:sub(1, 4) == "min_" then
-				if type(value) == "nil" or goal > value then return end
-			elseif condition:sub(1, 4) == "max_" then
-				if type(value) == "nil" or goal <= value then return end
-			else
-				value = env[condition]
-				if type(value) == "nil" or goal ~= value then return end
-			end
+			local is_applicable = climate_mod.trigger.test_condition(condition, env, goal)
+			if not is_applicable then return end
 		end
 		return action(pos, node, env)
 	end
