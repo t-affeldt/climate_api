@@ -1,26 +1,16 @@
 if not climate_mod.settings.skybox then return end
 
 local EFFECT_NAME = "climate_api:skybox"
-
-local reset_data = {}
+local modpath = minetest.get_modpath(minetest.get_current_modname())
+local sky_defaults = dofile(modpath .. "/lib/sky_defaults.lua")
 
 local function set_skybox(player, sky)
 	if not player.get_stars then return end
-	if sky.sky_data ~= nil then
-		player:set_sky(sky.sky_data)
-	end
-	if sky.cloud_data ~= nil then
-		player:set_clouds(sky.cloud_data)
-	end
-	if sky.moon_data ~= nil then
-		player:set_moon(sky.moon_data)
-	end
-	if sky.sun_data ~= nil then
-		player:set_sun(sky.sun_data)
-	end
-	if sky.star_data ~= nil then
-		player:set_stars(sky.stars_data)
-	end
+	player:set_sky(sky.sky_data)
+	player:set_clouds(sky.cloud_data)
+	player:set_moon(sky.moon_data)
+	player:set_sun(sky.sun_data)
+	player:set_stars(sky.star_data)
 end
 
 local function remove_skybox(player)
@@ -31,9 +21,9 @@ end
 local function handle_effect(player_data)
 	for playername, data in pairs(player_data) do
 		local player = minetest.get_player_by_name(playername)
-		local sky = {}
+		local sky = table.copy(sky_defaults)
 		for weather, value in pairs(data) do
-			climate_api.utility.merge_tables(sky, value)
+			sky = climate_api.utility.merge_tables(sky, value)
 		end
 		set_skybox(player, sky)
 	end
