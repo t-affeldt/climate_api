@@ -41,7 +41,6 @@ local function handle_effect(player_data, prev_data)
 end
 
 local function stop_effect(prev_data)
-	minetest.log(dump2(prev_data, "stop_effect"))
 	for playername, data in pairs(prev_data) do
 		for weather, value in pairs(data) do
 			stop_sound(playername, value)

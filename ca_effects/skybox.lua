@@ -15,7 +15,11 @@ end
 
 local function remove_skybox(player)
 	if not player.get_stars then return end
-	player:set_sky({ type = "regular", clouds = true })
+	player:set_sky(sky_defaults.sky_data)
+	player:set_clouds(sky_defaults.cloud_data)
+	player:set_moon(sky_defaults.moon_data)
+	player:set_sun(sky_defaults.sun_data)
+	player:set_stars(sky_defaults.star_data)
 end
 
 local function handle_effect(player_data)

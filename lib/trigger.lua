@@ -155,7 +155,6 @@ function trigger.call_handlers(name, effect, prev_effect)
 
 	-- remaining table lists ending effects
 	if has_stops then
-		minetest.log(dump2(name, "AAAAAAAAAAA"))
 		for _, handler in ipairs(climate_mod.effects[name]["stop"]) do
 			handler(stops)
 		end

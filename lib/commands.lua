@@ -156,3 +156,15 @@ minetest.register_chatcommand("weather_status", {
 		end
 	end
 })
+
+minetest.register_chatcommand("weather_influences", {
+	description = "Prints which weather influences cause your current weather",
+	func = function(playername)
+		minetest.chat_send_player(playername, "Current influences rules:\n================")
+		local player = minetest.get_player_by_name(playername)
+		local influences = climate_mod.trigger.get_player_environment(player)
+		for influence, value in pairs(influences) do
+			minetest.chat_send_player(playername, dump2(value, influence))
+		end
+	end
+})

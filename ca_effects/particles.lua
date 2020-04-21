@@ -21,7 +21,10 @@ local function spawn_particles(player, particles)
 		y = -particles.falling_speed,
 		z = wind.z
 	})
-	local acc = vector.new({x=0, y=0, z=0})
+
+	if particles.acceleration == nil then
+		particles.acceleration = vector.new({x=0, y=0, z=0})
+	end
 
 	local wind_pos = vector.multiply(
 		vector.normalize(vel),
@@ -31,25 +34,35 @@ local function spawn_particles(player, particles)
 	local minp = vector.add(vector.add(ppos, particles.min_pos), wind_pos)
 	local maxp = vector.add(vector.add(ppos, particles.max_pos), wind_pos)
 
-	local exp = particles.exptime
-	local vertical = math.abs(vector.normalize(vel).y) >= 0.6
+	if particles.time == nil then
+		particles.time = 0.5
+	end
+
+	if particles.vertical == nil then
+		particles.vertical = math.abs(vector.normalize(vel).y) >= 0.6
+	end
+
+	if particles.size ~= nil then
+		particles.min_size = particles.size
+		particles.max_size = particles.size
+	end
 
 	minetest.add_particlespawner({
 		amount = amount,
-		time = 0.5,
+		time = particles.time,
 		minpos = minp,
 		maxpos = maxp,
 		minvel = vel,
 		maxvel = vel,
-		minacc = acc,
-		maxacc = acc,
-		minexptime = exp,
-		maxexptime = exp,
-		minsize = particles.size,
-		maxsize = particles.size,
+		minacc = particles.acceleration,
+		maxacc = particles.acceleration,
+		minexptime = particles.exptime,
+		maxexptime = particles.exptime,
+		minsize = particles.min_size,
+		maxsize = particles.max_size,
 		collisiondetection = true,
 		collision_removal = true,
-		vertical = vertical,
+		vertical = particles.vertical,
 		texture = texture,
 		player = player:get_player_name()
 	})

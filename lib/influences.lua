@@ -36,13 +36,19 @@ climate_api.register_influence("height", function(pos)
 end)
 
 climate_api.register_influence("light", function(pos)
+	pos = vector.add(pos, {x = 0, y = 1, z = 0})
 	return minetest.env:get_node_light(pos)
 end)
 
 climate_api.register_influence("daylight", function(pos)
+	pos = vector.add(pos, {x = 0, y = 1, z = 0})
 	return minetest.env:get_node_light(pos, 0.5)
 end)
 
 climate_api.register_influence("time", function(_)
 	return minetest.get_timeofday()
+end)
+
+climate_api.register_influence("day_count", function(_)
+	return minetest.get_day_count()
 end)

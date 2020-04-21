@@ -17,7 +17,7 @@ end
 function api.register_effect(name, handler, htype)
 	-- check for valid handler types
 	if htype ~= "start" and htype ~= "tick" and htype ~= "stop" then
-		minetest.log("warning", "[Climate API] Invalid effect handler type: " .. htype)
+		minetest.log("warning", "[Climate API] Effect " .. dump(name) .. " uses invalid callback type: " .. dump(htype))
 		return
 	end
 	-- create effect handler registry if not existent yet

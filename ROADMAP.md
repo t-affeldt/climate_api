@@ -1,24 +1,25 @@
 # TODO
 
-## Required for MVP
-- Find good values for weather conditions
-- Make sure all weather presets are working
+## Required for Beta
+- Write helpful README
+- Refactor skybox effect and implement ranking system
+- Rework Moon Phases mod to be compatible and to include varying sky brightness
 
 ## Planned for first release
-- Write helpful README
 - Set effects on player join
-- Improve value structures of particle and skybox effects
+- Improve value structures of particle effects
 - Make sounds adjust to changes by weather presets
+- Find good values for weather conditions
+- Write documentation on how to add weathers and effects
+- Ability to register global influences that are the same for any position
 
 ## Nice to have
-- Write documentation on how to add weathers and effects
 - Assign meta data (like "downfall", "wind", etc.) to weather presets
-- Fog effects
 - Optimize performance by replacing some particles with animated texture planes
 - Make switches between effects more smooth
 - Adjust size of particle boxes based on player speed
-- Create conditions for time of day, annual progression, biome filters
 - Generate wind based on speed and yaw instead of x and z values
+- A flag indicating wind direction
 
 ## Future Plans & Ideas
 - Complete season system
