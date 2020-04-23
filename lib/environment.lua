@@ -5,13 +5,6 @@ local function get_heat_time()
 	return climate_api.utility.normalized_cycle(time) * 0.6 + 0.7
 end
 
-local function get_heat_calendar()
-	-- heat center in August instead of June
-	local day = minetest.get_day_count()
-	local progression = ((day + 61) % 365) / 365
-	return climate_api.utility.normalized_cycle(progression) * 0.6 + 0.7
-end
-
 local function get_heat_height(y)
 	return climate_api.utility.rangelim((-y + 10) / 15, -10, 10)
 end
@@ -21,9 +14,8 @@ function environment.get_heat(pos)
 	local biome = minetest.get_heat(pos)
 	local height = get_heat_height(pos.y)
 	local time = get_heat_time()
-	local date = get_heat_calendar()
 	local random = climate_mod.state:get_float("heat_random");
-	return (base + biome + height) * time * date * random
+	return (base + biome + height) * time * random
 end
 
 function environment.get_humidity(pos)

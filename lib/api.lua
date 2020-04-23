@@ -38,6 +38,8 @@ function api.register_influence(name, func)
 end
 
 function api.register_abm(config)
+	if not climate_mod.settings.block_updates then return end
+
 	local conditions = config.conditions
 	local action = config.action
 	local pos_override = config.pos_override

@@ -2,11 +2,11 @@ local world = {}
 
 local WIND_SPREAD = 600
 local WIND_SCALE = 2
-local HEAT_SPREAD = 200
+local HEAT_SPREAD = 400
 local HEAT_SCALE = 0.3
-local HUMIDITY_SPREAD = 60
+local HUMIDITY_SPREAD = 150
 local HUMIDITY_SCALE = 0.5
-local HUMIDITY_BASE_SPREAD = 600
+local HUMIDITY_BASE_SPREAD = 800
 local HUMIDITY_BASE_SCALE = 40
 
 local nobj_wind_x

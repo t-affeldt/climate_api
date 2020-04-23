@@ -2,13 +2,10 @@
 
 ## Required for Beta
 - Write helpful README
-- Refactor skybox effect and implement ranking system
 - Rework Moon Phases mod to be compatible and to include varying sky brightness
 
 ## Planned for first release
-- Set effects on player join
 - Improve value structures of particle effects
-- Make sounds adjust to changes by weather presets
 - Find good values for weather conditions
 - Write documentation on how to add weathers and effects
 - Ability to register global influences that are the same for any position
@@ -16,10 +13,8 @@
 ## Nice to have
 - Assign meta data (like "downfall", "wind", etc.) to weather presets
 - Optimize performance by replacing some particles with animated texture planes
-- Make switches between effects more smooth
 - Adjust size of particle boxes based on player speed
 - Generate wind based on speed and yaw instead of x and z values
-- A flag indicating wind direction
 
 ## Future Plans & Ideas
 - Complete season system
@@ -47,3 +42,4 @@
 	- standing near fire will warm up
 	- craftable warm clothes
 	- metal armor will worsen heat issues
+- A flag indicating wind direction

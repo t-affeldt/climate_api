@@ -27,6 +27,7 @@ climate_mod.settings = {
 	wind						= get_setting_bool("wind", true),
 	seasons					= get_setting_bool("seasons", true),
 	fahrenheit			= get_setting_bool("fahrenheit", false),
+	block_updates		= get_setting_bool("block_updates", true),
 	heat						= get_setting_number("heat_base", 0),
 	humidity				= get_setting_number("humidity_base", 0),
 	time_spread			= get_setting_number("time_spread", 1),
@@ -49,6 +50,7 @@ climate_mod.forced_wind = nil
 climate_mod.state = dofile(modpath .. "/lib/datastorage.lua")
 climate_api = dofile(modpath .. "/lib/api.lua")
 climate_api.utility = dofile(modpath .. "/lib/api_utility.lua")
+climate_api.skybox = dofile(modpath .. "/lib/skybox_merger.lua")
 dofile(modpath .. "/lib/influences.lua")
 climate_api.environment = dofile(modpath .. "/lib/environment.lua")
 --climate_api = dofile(modpath .. "/lib/influences.lua")
