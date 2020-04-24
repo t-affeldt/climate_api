@@ -2,7 +2,6 @@
 
 ## Required for Beta
 - Write helpful README
-- Rework Moon Phases mod to be compatible and to include varying sky brightness
 
 ## Planned for first release
 - Improve value structures of particle effects

@@ -25,7 +25,7 @@ local default_sky = {
 	},
 	sun_data = {
 		visible = true,
-		texture = "",
+		texture = "sun.png",
 		tonemap = "sun_tonemap.png",
 		sunrise = "sunrisebg.png",
 		sunrise_visible = true,
@@ -33,7 +33,7 @@ local default_sky = {
 	},
 	moon_data = {
 		visible = true,
-		texture = "",
+		texture = "moon.png",
 		tonemap = "moon_tonemap.png",
 		scale = 1
 	},

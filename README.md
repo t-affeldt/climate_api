@@ -8,8 +8,12 @@ Climate API provides temperature and humidity values on a block-per-block basis
 that follow the seasons, day / night cycle and random changes.
 Make it rain, change the sky or poison the player - it's up to you.
 
+## Assets
+- Sun and moon textures: *CC BY-SA (3.0)* by Cap
+
 ## Assets in screenshots
-- All screenshots and editing by me: *CC BY-SA (4.0)*
+- Screenshots and editing by me: *CC BY-SA (3.0)*
+- Logos and artwork: *CC BY-SA (3.0)* by Cap
 - Lato Font (for the Logo): *OFL* by Łukasz Dziedzic from http://www.latofonts.com/lato-free-fonts/
 - Liberation Fonts (for the text): *OFL*, see https://github.com/liberationfonts/liberation-fonts
 - Used texture pack: Polygonia (128px edition) *CC BY-SA (4.0)* by Lokrates. See https://forum.minetest.net/viewtopic.php?f=4&t=19043
