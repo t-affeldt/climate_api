@@ -1,13 +1,9 @@
 # TODO
 
-## Required for Beta
-- Write helpful README
-
 ## Planned for first release
 - Improve value structures of particle effects
 - Find good values for weather conditions
 - Write documentation on how to add weathers and effects
-- Ability to register global influences that are the same for any position
 
 ## Nice to have
 - Assign meta data (like "downfall", "wind", etc.) to weather presets

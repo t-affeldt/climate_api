@@ -33,6 +33,10 @@ function api.set_effect_cycle(name, cycle)
 	climate_mod.cycles[name].timespan = cycle
 end
 
+function api.register_global_influence(name, func)
+	climate_mod.global_influences[name] = func
+end
+
 function api.register_influence(name, func)
 	climate_mod.influences[name] = func
 end

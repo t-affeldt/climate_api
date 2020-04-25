@@ -14,6 +14,7 @@ minetest.register_globalstep(function(dtime)
 		world_timer = 0
 		climate_mod.state:set_float("noise_timer", noise_timer)
 		climate_mod.world.update_status(noise_timer)
+		climate_mod.global_environment = climate_mod.trigger.get_global_environment()
 	end
 
 	local previous_effects = table.copy(climate_mod.current_effects)

@@ -20,12 +20,12 @@ climate_api.register_influence("biome", function(pos)
 	return biome
 end)
 
-climate_api.register_influence("windspeed", function(_)
+climate_api.register_global_influence("windspeed", function()
 	local wind = climate_api.environment.get_wind()
 	return vector.length(wind)
 end)
 
-climate_api.register_influence("wind_yaw", function(_)
+climate_api.register_global_influence("wind_yaw", function()
 	local wind = climate_api.environment.get_wind()
 	if vector.length(wind) == 0 then return 0 end
 	return minetest.dir_to_yaw(wind)
@@ -45,10 +45,6 @@ climate_api.register_influence("daylight", function(pos)
 	return minetest.env:get_node_light(pos, 0.5)
 end)
 
-climate_api.register_influence("time", function(_)
+climate_api.register_global_influence("time", function()
 	return minetest.get_timeofday()
-end)
-
-climate_api.register_influence("day_count", function(_)
-	return minetest.get_day_count()
 end)

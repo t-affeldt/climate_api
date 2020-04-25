@@ -1,20 +1,15 @@
 local trigger = {}
 
-function trigger.get_position_environment(pos)
-	local wind_x = climate_mod.state:get_float("wind_x")
-	local wind_z = climate_mod.state:get_float("wind_z")
-
-	--[[local env = {}
-	env.pos = pos
-	env.height = pos.y
-	env.wind = vector.new(wind_x, 0, wind_z)
-	env.windspeed = vector.length(env.wind)
-	env.heat = climate_api.environment.get_heat(pos)
-	env.humidity = climate_api.environment.get_humidity(pos)
-	env.time = minetest.get_timeofday()
-	env.date = minetest.get_day_count()
-	env.light = minetest.get_node_light(vector.add(pos, vector.new({x=0,y=1,z=0})), 0.5)]]
+function trigger.get_global_environment()
 	local env = {}
+	for influence, func in pairs(climate_mod.global_influences) do
+		env[influence] = func()
+	end
+	return env
+end
+
+function trigger.get_position_environment(pos)
+	local env = table.copy(climate_mod.global_environment)
 	for influence, func in pairs(climate_mod.influences) do
 		env[influence] = func(pos)
 	end
