@@ -1,3 +1,12 @@
+--[[
+# Sound Loop Effect
+Use this effect to loop an ambient sound effect
+Expects a table as the parameter containing the following values:
+- ``name <string>``: Name of the played sound effect (without .ogg file ending)
+- ``gain <number>`` (optional): Volume of the sound (defaults to 1.0)
+- ``pitch <number>`` (optional): Pitch of the sound (defaults to 1.0)
+]]
+
 if not climate_mod.settings.sound then return end
 
 local EFFECT_NAME = "climate_api:sound"

@@ -122,7 +122,6 @@ function trigger.call_handlers(name, effect, prev_effect)
 			has_ticks = true
 			ticks.current[player] = sources
 			ticks.prev[player] = prev_effect[player]
-			--prev_effect[player] = nil -- remove any found entries
 		else
 			has_starts = true
 			starts[player] = sources

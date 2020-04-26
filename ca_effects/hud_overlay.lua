@@ -1,3 +1,12 @@
+--[[
+# HUD Overlay Effect
+Use this effect to display a fullscreen image as part of a player's HUD.
+Expects a table as the parameter containing the following values:
+- ``file <string>``: The name (including file ending) if the image to be displayed
+- ``z_index <number>`` (optional): The z_index to forward to player.hud_add. Defaults to 1
+- ``color_correction <bool>`` (optional): Whether the image should automatically darken based on current light. Defaults to false.
+]]
+
 if not climate_mod.settings.hud_overlay then return end
 
 local EFFECT_NAME = "climate_api:hud_overlay"

@@ -1,3 +1,21 @@
+--[[
+# Particle Effect
+Use this effect to render downfall using particles.
+Expects a table as the parameter containing the following values:
+- amount <number>: The quantity of spawned particles per cycle
+- EITHER texture <string>: The image file name
+- OR textures <table>: A list of possible texture variants
+- falling_speed <number>: The downwards speed
+- min_pos <number>: Bottom-left corner of spawn position (automatically adjusted by wind)
+- max_pos <number>: Top-right corner of spawn position (automatically adjusted by wind)
+- acceleration <vector> (optional): Particle acceleration in any direction
+- exptime <number>: Time of life of particles
+- time <number> (optional): The time of life of particle spawners (defaults to 0.5)
+- EITHER size <number>: Size of the particles
+- OR min_size <number> and max_size <number>: Minimum and maximum size
+- vertical <bool> (optional): Whether particles should rotate in 2D space only (default depends on falling vector)
+]]
+
 if not climate_mod.settings.particles then return end
 
 local EFFECT_NAME = "climate_api:particles"
@@ -10,7 +28,7 @@ local function get_particle_texture(particles)
 end
 
 local function spawn_particles(player, particles)
-	local ppos = player:getpos()
+	local ppos = player:get_pos()
 	local wind = climate_api.environment.get_wind()
 
 	local amount = particles.amount * climate_mod.settings.particle_count

@@ -1,3 +1,5 @@
+-- parse heat values into readable format
+-- also convert to Celsius if configured
 local function parse_heat(heat)
 	local indicator = "°F"
 	if not climate_mod.settings.fahrenheit then
@@ -8,11 +10,14 @@ local function parse_heat(heat)
 	return heat .. indicator
 end
 
+
+-- register weather privilege in order to modify the weather status
 minetest.register_privilege("weather", {
 	description = "Make changes to the current weather",
 	give_to_singleplayer = false
 })
 
+-- display general information on current weather
 minetest.register_chatcommand("weather", {
 	description ="Display weather information",
 	func = function(playername)
@@ -49,6 +54,7 @@ minetest.register_chatcommand("weather", {
 	end
 })
 
+-- set base heat to increase or decrease global climate temperatures
 minetest.register_chatcommand("set_heat", {
 	params = "<heat>",
 	description = "Override the weather algorithm's base heat",
@@ -63,6 +69,7 @@ minetest.register_chatcommand("set_heat", {
 	end
 })
 
+-- set base heat to increase or decrease global climate humidity
 minetest.register_chatcommand("set_humidity", {
 	params = "<humidity>",
 	description = "Override the weather algorithm's base humidity",
@@ -77,6 +84,7 @@ minetest.register_chatcommand("set_humidity", {
 	end
 })
 
+-- override wind direction and speed with given values
 minetest.register_chatcommand("set_wind", {
 	params = "<wind>",
 	description = "Override the weather algorithm's windspeed",
@@ -103,6 +111,7 @@ minetest.register_chatcommand("set_wind", {
 	end
 })
 
+-- display current mod config
 minetest.register_chatcommand("weather_settings", {
 	description = "Print the active Climate API configuration",
 	func = function(playername)
@@ -113,6 +122,7 @@ minetest.register_chatcommand("weather_settings", {
 	end
 })
 
+-- force a weather preset or disable it
 minetest.register_chatcommand("set_weather", {
 	params ="<weather> <status>",
 	description ="Turn the specified weather preset on or off for all players or reset it to automatic",
@@ -141,6 +151,7 @@ minetest.register_chatcommand("set_weather", {
 	end
 })
 
+-- list all weather presets and whether they have been forced or disabled
 minetest.register_chatcommand("weather_status", {
 	description = "Prints which weather presets are enforced or disabled",
 	func = function(playername)
@@ -157,6 +168,7 @@ minetest.register_chatcommand("weather_status", {
 	end
 })
 
+-- show all environment influences and their values for the executing player
 minetest.register_chatcommand("weather_influences", {
 	description = "Prints which weather influences cause your current weather",
 	func = function(playername)

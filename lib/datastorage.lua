@@ -7,7 +7,7 @@ if not state:contains("noise_timer") then
 		humidity_base = 50,
 		wind_x = 0.5,
 		wind_z = 0.5,
-		noise_timer = math.random(0, 300000)
+		noise_timer = 0
 	})
 end
 
