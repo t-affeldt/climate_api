@@ -14,6 +14,19 @@ climate_api.register_influence("base_humidity", function(pos)
 	return minetest.get_humidity(pos)
 end)
 
+-- see https://en.wikipedia.org/wiki/Dew_point#Simple_approximation
+climate_api.register_influence("dewpoint", function(pos)
+	local heat = climate_api.environment.get_heat(pos)
+	local humidity = climate_api.environment.get_humidity(pos)
+	return heat - (9/25 * (100 - humidity))
+end)
+
+climate_api.register_influence("base_dewpoint", function(pos)
+	local heat = minetest.get_heat(pos)
+	local humidity = minetest.get_humidity(pos)
+	return heat - (9/25 * (100 - humidity))
+end)
+
 climate_api.register_influence("biome", function(pos)
 	local data = minetest.get_biome_data(pos)
 	local biome = minetest.get_biome_name(data.biome)

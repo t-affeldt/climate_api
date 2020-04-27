@@ -25,6 +25,8 @@ end
 
 -- load settings from config file
 climate_mod.settings = {
+	damage					= get_setting_bool("damage", true),
+	raycast					= get_setting_bool("raycast", true),
 	particles				= get_setting_bool("particles", true),
 	skybox					= get_setting_bool("skybox", true),
 	sound						= get_setting_bool("sound", true),
@@ -72,6 +74,7 @@ dofile(modpath.."/lib/commands.lua")
 dofile(modpath .. "/lib/influences.lua")
 
 -- import predefined environment effects
+dofile(modpath .. "/ca_effects/damage.lua")
 dofile(modpath .. "/ca_effects/hud_overlay.lua")
 dofile(modpath .. "/ca_effects/particles.lua")
 dofile(modpath .. "/ca_effects/skybox.lua")

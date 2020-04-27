@@ -14,8 +14,17 @@ climate_api_particle_count (Multiplicator for used particles) float 1 0.1 2
 # These can be used to dynamically place snow layers, melt ice, or hydrate soil.
 climate_api_block_updates (Dynamically modify nodes) bool true
 
+# If set to true, Climate API will factor in wind speed and obstacles to determine damage sources.
+# If set to false, a simple check will be used whether the player is outside.
+# Only applied if climate_api_damage is also set to true.
+climate_api_raycast (Include wind speed in damage checks) bool true
 
-[Visuals]
+
+[Weather Effects]
+
+# If set to true, dangerous weather presets will damage affected players over time.
+climate_api_damage (Cause player damage) bool true
+
 # If set to true, weather effects (like rain) are allowed to render particles.
 # Deactivating this feature will prevent some presets from being visible.
 # For performance considerations it is recommended to decrease the amount of particles instead.

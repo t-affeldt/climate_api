@@ -57,8 +57,13 @@ Lower values can possible increase performance.
 - ``Dynamically modify nodes`` (default true):
 If set to true, weather packs are allowed to register node update handlers.
 These can be used to dynamically place snow layers, melt ice, or hydrate soil.
+- ``Include wind speed in damage checks`` (default true):
+If set to true, Climate API will factor in wind speed and obstacles to determine damage sources.
+If set to false, a simple check will be used whether the player is outside.
 
-### Visuals
+### Weather Effects
+- ``Cause player damage`` (default true):
+If set to true, dangerous weather presets will damage affected players over time.
 - ``Show particle effects`` (default true):
 If set to true, weather effects (like rain) are allowed to render particles.
 Deactivating this feature will prevent some presets from being visible.
