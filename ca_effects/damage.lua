@@ -3,7 +3,7 @@
 Use this effect to damage a player during dangerous weather events.
 Expects a table as the parameter containing the following values:
 - value <int> [1]: The amount of damage to be applied per successful roll.
-- chance <int> [1]: Defines a 1/x roll per cycle for the player to get damaged. Higher values result in less frequent damage.
+- rarity <int> [1]: Defines a 1/x chance per cycle for the player to get damaged. Higher values result in less frequent damage.
 - check <table> [nil]: Use an additional outdoors check before applying damage. Consists of the following values:
 	- type <"light"|"raycast"> ["light"] (Whether the light level should be used a raycast should be performed)
 	- height <number> [0] (Height offset of weather origin from the player. Only used for raycasts)
@@ -58,9 +58,9 @@ end
 
 local function calc_damage(player, dmg)
 	if dmg.value == nil then dmg.value = 1 end
-	if dmg.chance == nil then dmg.chance = 1 end
+	if dmg.rarity == nil then dmg.rarity = 1 end
 	-- check if damage should be applied
-	if rng:next(1, dmg.chance) ~= 1 then return 0 end
+	if rng:next(1, dmg.rarity) ~= 1 then return 0 end
 	if dmg.check ~= nil then
 		-- check for obstacles in the way
 		if not check_hit(player, dmg.check) then return 0 end
@@ -81,4 +81,3 @@ local function handle_effect(player_data)
 end
 
 climate_api.register_effect(EFFECT_NAME, handle_effect, "tick")
-climate_api.set_effect_cycle(EFFECT_NAME, climate_api.MEDIUM_CYCLE)

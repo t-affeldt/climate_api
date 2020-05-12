@@ -1,5 +1,6 @@
 local mod_player_monoids = minetest.get_modpath("player_monoids") ~= nil
 local mod_playerphysics = minetest.get_modpath("playerphysics") ~= nil
+local mod_pova = minetest.get_modpath("pova") ~= nil
 
 local utility = {}
 
@@ -33,31 +34,5 @@ function utility.normalized_cycle(value)
 	return math.cos((2 * value + 1) * math.pi) / 2 + 0.5
 end
 
--- override player physics
--- use utility mod if possible to avoid conflict
-function utility.add_physics(id, player, effect, value)
-	if mod_player_monoids then
-		player_monoids[effect]:add_change(player, value, id)
-	elseif mod_playerphysics then
-		playerphysics.add_physics_factor(player, effect, id, value)
-	else
-		local override = {}
-		override[effect] = value
-		player:set_physics_override(override)
-	end
-end
-
--- reset player phsysics to normal
-function utility.remove_physics(id, player, effect)
-	if mod_player_monoids then
-		player_monoids[effect]:del_change(player, id)
-	elseif mod_playerphysics then
-		playerphysics.remove_physics_factor(player, effect, id)
-	else
-		local override = {}
-		override[effect] = 1
-		player:set_physics_override(override)
-	end
-end
 
 return utility

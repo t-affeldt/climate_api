@@ -72,7 +72,7 @@ local function set_skybox(playername, sky)
 	player:set_stars(sky.star_data)
 end
 
-function skybox.update_skybox(playername)
+function skybox.update(playername)
 	local p_layers = layers[playername]
 	local sky = table.copy(default_sky)
 	if p_layers == nil then p_layers = {} end
@@ -91,12 +91,12 @@ function skybox.update_skybox(playername)
 	set_skybox(playername, sky)
 end
 
-function skybox.add_layer(playername, name, sky)
+function skybox.add(playername, name, sky)
 	if layers[playername] == nil then layers[playername] = {} end
 	layers[playername][name] = sky
 end
 
-function skybox.remove_layer(playername, name)
+function skybox.remove(playername, name)
 	if layers[playername] == nil or layers[playername][name] == nil then return end
 	layers[playername][name] = nil
 end

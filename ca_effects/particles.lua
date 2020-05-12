@@ -10,29 +10,33 @@ Furthermore, the following default values have been changed:
 - collisiondetection <bool> [true]
 - collision_removal <bool> [true]
 - playername <string> [current player] (Set to empty string to show for everyone)
+- vertical <bool> [nil] (Unless explicitly set, particle facing rotation will be automatically set based on direction of velocity)
 
-The following optional values have been introduced or expanded for convenience:
-- size <int> [nil] (Overrides both minsize and maxsize if set)
+The following optional values have been introduced for convenience:
 - boxsize <vector> [nil] (Overrides minpos and maxpos based on specified sizes per direction with the player in the center)
 - boxsize <number> [nil] (If set to a number, the resulting vector will have the specified size in all directions)
 - v_offset <int> [0] (Use in conjunctin with boxsize. Adds specified height to minpos and maxpos y-coordinates)
+- attach_to_player <bool> [false] (Overrides attached object with current player)
+
+The following optional values have been expanded with additional value types for convenience:
+- size <int> [nil] (Overrides both minsize and maxsize if set)
 - minvel <int> [nil] (Overrides minvel with a downward facing vector of specified length)
 - maxvel <int> [nil] (Overrides maxvel with a downward facing vector of specified length)
 - velocity <vector | int> [nil] (Overrides both minvel and maxvel if set)
 - minacc <int> [nil] (Overrides minacc with a downward facing vector of specified length)
 - maxacc <int> [nil] (Overrides maxacc with a downward facing vector of specified length)
 - acceleration <vector | int> [nil] (Overrides both minacc and maxacc if set)
-- attach_to_player <bool> [false] (Overrides attached object with current player)
 
 The following new behaviours have been introduced:
 - use_wind <bool> [true] (Adjusts velocity and position for current windspeed)
-- detached <bool> [false] (Unless enabled, considers positions as relative to current player like being attached)
-- vertical <bool> [nil] (Unless explicitly set, will be automatically set based on direction of velocity)
+- detach <bool> [false] (Unless enabled, considers positions as relative to current player as if spawner's position would be attached)
+- adjust_for_velocity <bool> [true] (Corrects position of particle spawner by player's movement speed. Only applicable if detach = false and not manually attached)
 ]]
 
 if not climate_mod.settings.particles then return end
 
 local EFFECT_NAME = "climate_api:particles"
+local CYCLE_LENGTH = climate_api.SHORT_CYCLE
 
 -- parse config by injecting default values and adding additional parameters
 local function parse_config(player, particles)
@@ -44,7 +48,8 @@ local function parse_config(player, particles)
 		playername = player:get_player_name(),
 		use_wind = true,
 		attach_to_player = false,
-		detached = false
+		detach = false,
+		adjust_for_velocity = true
 	}
 
 	-- inject missing default values into specified config
@@ -153,12 +158,20 @@ local function parse_config(player, particles)
 	config.attach_to_player = nil
 
 	-- attach coordinates to player unless specified or already attached
-	if (not config.detached) and config.attached == nil then
+	if (not config.detach) and config.attached == nil then
 		local ppos = player:get_pos()
 		config.minpos = vector.add(config.minpos, ppos)
 		config.maxpos = vector.add(config.maxpos, ppos)
+
+		-- correct spawn coordinates to adjust for player movement
+		if config.adjust_for_velocity then
+			local velocity = player:get_player_velocity()
+			config.minpos = vector.add(config.minpos, velocity)
+			config.maxpos = vector.add(config.maxpos, velocity)
+		end
 	end
-	config.detached = nil
+	config.detach = nil
+	config.adjust_for_velocity = nil
 
 	-- move particles in wind direction
 	if config.use_wind then
@@ -198,4 +211,4 @@ local function handle_effect(player_data)
 end
 
 climate_api.register_effect(EFFECT_NAME, handle_effect, "tick")
-climate_api.set_effect_cycle(EFFECT_NAME, climate_api.SHORT_CYCLE)
+climate_api.set_effect_cycle(EFFECT_NAME, CYCLE_LENGTH)

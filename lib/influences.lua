@@ -1,18 +1,18 @@
-climate_api.register_influence("heat", function(pos)
-	return climate_api.environment.get_heat(pos)
-end)
+climate_api.register_influence("heat",
+	climate_api.environment.get_heat
+)
 
-climate_api.register_influence("base_heat", function(pos)
-	return minetest.get_heat(pos)
-end)
+climate_api.register_influence("base_heat",
+	minetest.get_heat
+)
 
-climate_api.register_influence("humidity", function(pos)
-	return climate_api.environment.get_humidity(pos)
-end)
+climate_api.register_influence("humidity",
+	climate_api.environment.get_humidity
+)
 
-climate_api.register_influence("base_humidity", function(pos)
-	return minetest.get_humidity(pos)
-end)
+climate_api.register_influence("base_humidity",
+	minetest.get_humidity
+)
 
 -- see https://en.wikipedia.org/wiki/Dew_point#Simple_approximation
 climate_api.register_influence("dewpoint", function(pos)
@@ -58,6 +58,6 @@ climate_api.register_influence("daylight", function(pos)
 	return minetest.env:get_node_light(pos, 0.5)
 end)
 
-climate_api.register_global_influence("time", function()
-	return minetest.get_timeofday()
-end)
+climate_api.register_global_influence("time",
+	minetest.get_timeofday()
+)

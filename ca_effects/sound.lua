@@ -60,4 +60,3 @@ end
 climate_api.register_effect(EFFECT_NAME, start_effect, "start")
 climate_api.register_effect(EFFECT_NAME, handle_effect, "tick")
 climate_api.register_effect(EFFECT_NAME, stop_effect, "stop")
-climate_api.set_effect_cycle(EFFECT_NAME, climate_api.MEDIUM_CYCLE)

@@ -1,5 +1,5 @@
-local GSCYCLE			=  0.03	* climate_mod.settings.tick_speed	-- only process event loop after this time amount
-local WORLD_CYCLE = 15.00	* climate_mod.settings.tick_speed	-- only update global environment influences after this time amount
+local GSCYCLE			=  0.03	* climate_mod.settings.tick_speed	-- only process event loop after this amount of time
+local WORLD_CYCLE = 15.00	* climate_mod.settings.tick_speed	-- only update global environment influences after this amount of time
 
 local gs_timer = 0
 local world_timer = 0
@@ -10,10 +10,8 @@ minetest.register_globalstep(function(dtime)
 	if gs_timer + dtime < GSCYCLE then return else gs_timer = 0 end
 
 	if world_timer >= WORLD_CYCLE then
-		local noise_timer = climate_mod.state:get_float("noise_timer") + world_timer
 		world_timer = 0
-		climate_mod.state:set_float("noise_timer", noise_timer)
-		climate_mod.world.update_status(noise_timer)
+		climate_mod.world.update_status(minetest.get_gametime())
 		climate_mod.global_environment = climate_mod.trigger.get_global_environment()
 	end
 
