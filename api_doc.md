@@ -1,7 +1,7 @@
 # API Documentation
 
 ## How to read this document
-If a function states multiple parameters of the same name then either of them has to be passed on function call. Look at the function signature to determine the order of required parameters.
+If a function states multiple parameters of the same name then either of them has to be passed on function call. Look at the function signature to determine the order of required parameters. So far, all parameters are mandatory.
 
 ## Custom Weather Registration
 
@@ -82,22 +82,29 @@ __Parameter__: ``pos <vector>``: Coordinates of requested location
 __Returns__: ``<number>`` indicating current humidity
 
 ### Get Current Windspeed
-``climate_api.environment.get_wind()``
+``climate_api.environment.get_wind(pos)``
+
+__Parameter__: ``pos <vector>``: Coordinates of requested location. Right now, only y-coordinate is used.
 
 __Returns__: ``<vector>`` indicating speed and direction
 
-### ``climate_api.environment.get_weather_presets(player)``
+### Get Active Weather Presets
+``climate_api.environment.get_weather_presets(player)``
 
-### ``climate_api.environment.get_effects(player)``
+### Get Active Weather Effects
+``climate_api.environment.get_effects(player)``
 
 
 ## Skybox Modification
 
-### ``climate_api.skybox.add(playername, name, sky)``
+### Add Sky Configuration Layer
+``climate_api.skybox.add(playername, name, sky)``
 
-### ``climate_api.skybox.remove(playername, name)``
+### Remove Sky Configuration Layer
+``climate_api.skybox.remove(playername, name)``
 
-### ``climate_api.skybox.update(playername)``
+### Update Player Sky
+``climate_api.skybox.update(playername)``
 
 
 ## Player Physics Modifications
@@ -147,6 +154,36 @@ __Parameters__:
 
 __Returns__: ``<table>`` consisting of all attributes from A and B.
 
-### ``climate_api.utility.sigmoid(value, max, growth, midpoint)``
+### Limit Numeric Boundaries
+``climate_api.utility.rangelim(value, min, max)``
 
-### ``climate_api.utility.normalized_cycle(value)``
+This function will return the specified value if it falls in range between minimum and maximum. Otherwise, it will return the closest boundary.
+
+__Parameter__:
+- ``value <number>``: The number to check and return
+- ``min <number>``: The lower boundary
+- ``max <number>``: The upper boundary
+
+__Returns__: ``<number>`` being either the value or the closest boundary
+
+### Statistical Sigmoid Function
+``climate_api.utility.sigmoid(value, max, growth, midpoint)``
+
+This method provides a logistic function that will result in growing return values for greater input values. The resulting function graph will look like an S and fall in range between ``0`` and ``max``. You can adjust the curve by specifying growth rate and midpoint.
+
+__Parameters__:
+- ``value <number>``: x value supplied to the function
+- ``max <number>``: Maximum return value
+- ``growth <number>``: Logistic growth rate
+- ``midpoint <number>`` Return value for ``value = 0`` and function midpoint
+
+__Returns__: ``<number>`` indicating y coordinate of logistic function
+
+### Normalized Sinus Cycle
+``climate_api.utility.normalized_cycle(value)``
+
+This function provides an easy way to generate a simple curve with a maximal turning point of ``y = 1`` located at ``value = 0`` and the lowest points of ``y = 0`` at ``value = +/- 1``.
+
+__Parameter__: ``value <number>``: The supplied x coordinate
+
+__Returns__: ``<number>`` indicating resulting y coordinate between ``0`` and ``1``.

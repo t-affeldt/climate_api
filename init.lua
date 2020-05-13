@@ -53,7 +53,7 @@ climate_mod.influences = {}
 climate_mod.current_weather = {}
 climate_mod.current_effects = {}
 climate_mod.forced_weather = {}
-climate_mod.forced_wind = nil
+climate_mod.forced_enviroment = {}
 
 -- handle persistent mod storage
 climate_mod.state = dofile(modpath .. "/lib/datastorage.lua")

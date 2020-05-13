@@ -1,15 +1,11 @@
 # TODO
 
-## Planned for first release
-- Improve value structures of particle effects
-- Find good values for weather conditions
+## Needs improvement
 - Write documentation on how to add weathers and effects
 
 ## Nice to have
 - Assign meta data (like "downfall", "wind", etc.) to weather presets
 - Optimize performance by replacing some particles with animated texture planes
-- Adjust size of particle boxes based on player speed
-- Generate wind based on speed and yaw instead of x and z values
 
 ## Future Plans & Ideas
 - Complete season system

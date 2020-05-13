@@ -175,7 +175,8 @@ local function parse_config(player, particles)
 
 	-- move particles in wind direction
 	if config.use_wind then
-		local wind = climate_api.environment.get_wind()
+		local pos = vector.multiply(vector.add(config.minpos, config.maxpos), 0.5)
+		local wind = climate_api.environment.get_wind(pos)
 		-- adjust velocity to include wind
 		config.minvel = vector.add(config.minvel, wind)
 		config.maxvel = vector.add(config.maxvel, wind)

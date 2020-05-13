@@ -37,7 +37,7 @@ function trigger.test_condition(condition, env, goal)
 		return false
 	else
 		value = env[condition]
-		return type(value) ~= "nil" and goal == value
+		return type(value) == "nil" or goal == value
 	end
 end
 

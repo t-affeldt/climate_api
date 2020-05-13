@@ -22,7 +22,9 @@ local function apply_hud(pname, weather, hud)
 	local file
 	if hud.color_correction then
 		local pos = vector.add(player:get_pos(), {x = 0, y = 1, z = 0})
-		local light = math.floor(math.max(minetest.env:get_node_light(pos) / 15, 0.2) * 256)
+		local node_light = minetest.env:get_node_light(pos)
+		if not node_light then node_light = 0 end
+		local light = math.floor(math.max(node_light / 15, 0.2) * 256)
 		local shadow = 256 - light
 
 		local dark_file = hud.file .. "^[multiply:#000000ff^[opacity:" .. shadow

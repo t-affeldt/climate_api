@@ -49,7 +49,6 @@ elseif mod_pova then
 
 -- fallback to vanilla override as last resort
 else
-	local physics = {}
 	local function apply_physics(player)
 		local playername = player:get_player_name()
 		local override = { speed = 1, jump = 1, gravity = 1 }

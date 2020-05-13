@@ -55,6 +55,22 @@ minetest.register_chatcommand("weather", {
 })
 
 -- set base heat to increase or decrease global climate temperatures
+minetest.register_chatcommand("set_base_heat", {
+	params = "<heat>",
+	description = "Override the weather algorithm's base heat",
+	privs = { weather = true },
+	func = function(playername, param)
+		if param == nil or param == "" then
+			minetest.chat_send_player(playername, "Provide a number to modify the base heat")
+			return
+		end
+		if param == "auto" then param = 0 end
+		climate_mod.settings.heat = tonumber(param)
+		minetest.chat_send_player(playername, "Base heat changed")
+	end
+})
+
+-- override global heat levels with given value
 minetest.register_chatcommand("set_heat", {
 	params = "<heat>",
 	description = "Override the weather algorithm's base heat",
@@ -64,12 +80,33 @@ minetest.register_chatcommand("set_heat", {
 			minetest.chat_send_player(playername, "Provide a number to modify the base heat")
 			return
 		end
-		climate_mod.settings.heat = tonumber(param)
-		minetest.chat_send_player(playername, "Heat changed")
+		if param == "auto" then
+			climate_mod.forced_enviroment.heat = nil
+			minetest.chat_send_player(playername, "Heat value reset")
+		else
+			climate_mod.forced_enviroment.heat = tonumber(param)
+			minetest.chat_send_player(playername, "Heat value changed")
+		end
 	end
 })
 
 -- set base heat to increase or decrease global climate humidity
+minetest.register_chatcommand("set_base_humidity", {
+	params = "<humidity>",
+	description = "Override the weather algorithm's base humidity",
+	privs = { weather = true },
+	func = function(playername, param)
+		if param == nil or param == "" then
+			minetest.chat_send_player(playername, "Provide a number to modify the base humidity")
+			return
+		end
+		if param == "auto" then param = 0 end
+		climate_mod.settings.humidity = tonumber(param)
+		minetest.chat_send_player(playername, "Base humidity changed")
+	end
+})
+
+-- override global humidity with given value
 minetest.register_chatcommand("set_humidity", {
 	params = "<humidity>",
 	description = "Override the weather algorithm's base humidity",
@@ -79,8 +116,13 @@ minetest.register_chatcommand("set_humidity", {
 			minetest.chat_send_player(playername, "Provide a number to modify the base humidity")
 			return
 		end
-		climate_mod.settings.humidity = tonumber(param)
-		minetest.chat_send_player(playername, "Humidity changed")
+		if param == "auto" then
+			climate_mod.forced_enviroment.humidity = nil
+			minetest.chat_send_player(playername, "Humidity value reset")
+		else
+			climate_mod.forced_enviroment.humidity = tonumber(param)
+			minetest.chat_send_player(playername, "Humidity value changed")
+		end
 	end
 })
 
@@ -99,9 +141,11 @@ minetest.register_chatcommand("set_wind", {
 		local wind_x = arguments[1]
 		local wind_z = arguments[2]
 		if wind_x == "auto" then
-			climate_mod.forced_wind = nil
+			climate_mod.forced_enviroment.wind = nil
+		elseif wind_x == nil or wind_z == nil then
+			minetest.chat_send_player(playername, "Invalid wind configuration")
 		else
-			climate_mod.forced_wind = vector.new({
+			climate_mod.forced_enviroment.wind = vector.new({
 				x = tonumber(wind_x),
 				y = 0,
 				z = tonumber(wind_z)
@@ -131,11 +175,14 @@ minetest.register_chatcommand("set_weather", {
 		local arguments = {}
 		for w in param:gmatch("%S+") do table.insert(arguments, w) end
 		local weather = arguments[1]
-		if climate_mod.weathers[weather] == nil then
+		if weather == nil or climate_mod.weathers[weather] == nil then
 			minetest.chat_send_player(playername, "Unknown weather preset")
 			return
 		end
 		local status
+		if arguments[2] == nil or arguments[2] == "" then
+			arguments[2] = "on"
+		end
 		if arguments[2] == "on" then
 			status = true
 		elseif arguments[2] == "off" then

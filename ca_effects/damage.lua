@@ -35,7 +35,7 @@ local function check_hit(player, ray)
 	-- use raycating to factor in wind speed
 	local origin = vector.add(ppos, {x = 0, y = ray.height or 0, z = 0 })
 	if ray.use_wind ~= false then
-		local wind = climate_api.environment.get_wind()
+		local wind = climate_api.environment.get_wind(origin)
 		local velocity = ray.velocity or 1
 		local windpos = vector.multiply(
 			vector.normalize(vector.add({ x = 0, y = -velocity, z = 0 }, wind)),

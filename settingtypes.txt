@@ -5,7 +5,7 @@
 # Lower values will significantly increase overall performance at the cost of rougher looking effects.
 climate_api_tick_speed (Update speed of weather effects) float 1 0.1 10
 
-# This value regulated how many particles will be spawned.
+# This value regulates how many particles will be spawned.
 # A value of 1 will use the recommended amount of particles.
 # Lower values can possible increase performance.
 climate_api_particle_count (Multiplicator for used particles) float 1 0.1 2
