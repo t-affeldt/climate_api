@@ -76,7 +76,12 @@ end
 function trigger.get_active_effects()
 	local environments = {}
 	for _, player in ipairs(minetest.get_connected_players()) do
-		environments[player:get_player_name()] = trigger.get_player_environment(player)
+		local playername = player:get_player_name()
+		local hp = player:get_hp()
+		-- skip weather presets for dead players
+		if hp ~= nil and hp > 0 then
+			environments[playername] = trigger.get_player_environment(player)
+		end
 	end
 
 	local effects = {}

@@ -65,7 +65,7 @@ minetest.register_chatcommand("set_base_heat", {
 			return
 		end
 		if param == "auto" then param = 0 end
-		climate_mod.settings.heat = tonumber(param)
+		climate_mod.settings.heat = tonumber(param) or 0
 		minetest.chat_send_player(playername, "Base heat changed")
 	end
 })
@@ -84,7 +84,7 @@ minetest.register_chatcommand("set_heat", {
 			climate_mod.forced_enviroment.heat = nil
 			minetest.chat_send_player(playername, "Heat value reset")
 		else
-			climate_mod.forced_enviroment.heat = tonumber(param)
+			climate_mod.forced_enviroment.heat = tonumber(param) or 0
 			minetest.chat_send_player(playername, "Heat value changed")
 		end
 	end
@@ -96,12 +96,12 @@ minetest.register_chatcommand("set_base_humidity", {
 	description = "Override the weather algorithm's base humidity",
 	privs = { weather = true },
 	func = function(playername, param)
+		if param == "auto" then param = 0 end
 		if param == nil or param == "" then
 			minetest.chat_send_player(playername, "Provide a number to modify the base humidity")
 			return
 		end
-		if param == "auto" then param = 0 end
-		climate_mod.settings.humidity = tonumber(param)
+		climate_mod.settings.humidity = tonumber(param) or 0
 		minetest.chat_send_player(playername, "Base humidity changed")
 	end
 })
@@ -120,7 +120,7 @@ minetest.register_chatcommand("set_humidity", {
 			climate_mod.forced_enviroment.humidity = nil
 			minetest.chat_send_player(playername, "Humidity value reset")
 		else
-			climate_mod.forced_enviroment.humidity = tonumber(param)
+			climate_mod.forced_enviroment.humidity = tonumber(param) or 0
 			minetest.chat_send_player(playername, "Humidity value changed")
 		end
 	end
@@ -138,20 +138,22 @@ minetest.register_chatcommand("set_wind", {
 		end
 		local arguments = {}
 		for w in param:gmatch("%S+") do table.insert(arguments, w) end
-		local wind_x = arguments[1]
-		local wind_z = arguments[2]
-		if wind_x == "auto" then
+		local arg1 = arguments[1]
+		local wind_x = tonumber(arguments[1])
+		local wind_z = tonumber(arguments[2])
+		if arg1 == "auto" then
 			climate_mod.forced_enviroment.wind = nil
+			minetest.chat_send_player(playername, "Wind reset")
 		elseif wind_x == nil or wind_z == nil then
 			minetest.chat_send_player(playername, "Invalid wind configuration")
 		else
 			climate_mod.forced_enviroment.wind = vector.new({
-				x = tonumber(wind_x),
+				x = wind_x,
 				y = 0,
-				z = tonumber(wind_z)
+				z = wind_z
 			})
+			minetest.chat_send_player(playername, "Wind changed")
 		end
-		minetest.chat_send_player(playername, "Wind changed")
 	end
 })
 

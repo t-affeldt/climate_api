@@ -14,6 +14,8 @@ local EFFECT_NAME = "climate_api:hud_overlay"
 local handles = {}
 local function apply_hud(pname, weather, hud)
 	local player = minetest.get_player_by_name(pname)
+	if player == nil then return end
+
 	if handles[pname] == nil then handles[pname] = {} end
 	if handles[pname][weather] ~= nil then
 		player:hud_remove(handles[pname][weather])
@@ -48,9 +50,11 @@ local function apply_hud(pname, weather, hud)
 end
 
 local function remove_hud(pname, weather, hud)
-	if handles[pname] == nil or handles[pname][weather] == nil then return end
-	local handle = handles[pname][weather]
 	local player = minetest.get_player_by_name(pname)
+	if player == nil then return end
+	if handles[pname] == nil or handles[pname][weather] == nil then return end
+
+	local handle = handles[pname][weather]
 	player:hud_remove(handle)
 	handles[pname][weather] = nil
 end

@@ -64,7 +64,7 @@ end
 
 local function set_skybox(playername, sky)
 	local player = minetest.get_player_by_name(playername)
-	if not player.get_stars then return end
+	if player == nil or	not player.get_stars then return end
 	player:set_sky(sky.sky_data)
 	player:set_clouds(sky.cloud_data)
 	player:set_moon(sky.moon_data)
@@ -85,7 +85,7 @@ function skybox.update(playername)
 		if right.priority == nil then right.priority = 1 end
 		return left.priority < right.priority
 	end)
-	for i=1,#numbered_layers do
+	for i = 1, #numbered_layers do
 		sky = merge_tables(sky, numbered_layers[i])
 	end
 	set_skybox(playername, sky)
