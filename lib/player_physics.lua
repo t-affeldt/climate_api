@@ -38,13 +38,13 @@ elseif mod_pova then
 		local override = {}
 		override[effect] = (value * default) - default
 		pova.add_override(playername, id, override)
-		pova.do_override(playername)
+		pova.do_override(player)
 	end
 
 	function physics.remove(id, player, effect)
 		local playername = player:get_player_name()
 		pova.del_override(playername, id)
-		pova.do_override(playername)
+		pova.do_override(player)
 	end
 
 -- fallback to vanilla override as last resort
