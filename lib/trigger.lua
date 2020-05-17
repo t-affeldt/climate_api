@@ -90,20 +90,22 @@ function trigger.get_active_effects()
 		for _, player in ipairs(minetest.get_connected_players()) do
 			local pname = player:get_player_name()
 			local env = environments[pname]
-			if is_weather_active(player, wname, env) then
-				if type(climate_mod.current_weather[pname]) == "nil" then
-					climate_mod.current_weather[pname] = {}
-				end
-				table.insert(climate_mod.current_weather[pname], wname)
-				local player_effects = get_weather_effects(player, wconfig, env)
-				for effect, value in pairs(player_effects) do
-					if type(effects[effect]) == "nil" then
-						effects[effect] = {}
+			if env ~= nil then
+				if is_weather_active(player, wname, env) then
+					if type(climate_mod.current_weather[pname]) == "nil" then
+						climate_mod.current_weather[pname] = {}
 					end
-					if type(effects[effect][pname]) == "nil" then
-						effects[effect][pname] = {}
+					table.insert(climate_mod.current_weather[pname], wname)
+					local player_effects = get_weather_effects(player, wconfig, env)
+					for effect, value in pairs(player_effects) do
+						if type(effects[effect]) == "nil" then
+							effects[effect] = {}
+						end
+						if type(effects[effect][pname]) == "nil" then
+							effects[effect][pname] = {}
+						end
+						effects[effect][pname][wname] = value
 					end
-					effects[effect][pname][wname] = value
 				end
 			end
 		end
