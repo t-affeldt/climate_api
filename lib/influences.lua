@@ -50,12 +50,12 @@ end)
 
 climate_api.register_influence("light", function(pos)
 	pos = vector.add(pos, {x = 0, y = 1, z = 0})
-	return minetest.env:get_node_light(pos) or 0
+	return minetest.get_node_light(pos) or 0
 end)
 
 climate_api.register_influence("daylight", function(pos)
 	pos = vector.add(pos, {x = 0, y = 1, z = 0})
-	return minetest.env:get_node_light(pos, 0.5) or 0
+	return minetest.get_node_light(pos, 0.5) or 0
 end)
 
 climate_api.register_global_influence("time",

@@ -18,6 +18,7 @@ end
 
 function trigger.get_player_environment(player)
 	local ppos = player:get_pos()
+	if ppos == nil then return end
 	local env = trigger.get_position_environment(ppos)
 	env.player = player
 	return env
@@ -26,15 +27,24 @@ end
 function trigger.test_condition(condition, env, goal)
 	local value = env[condition:sub(5)]
 	if condition:sub(1, 4) == "min_" then
-		return type(value) ~= "nil" and goal <= value
+		return value ~= nil and goal <= value
 	elseif condition:sub(1, 4) == "max_" then
-		return type(value) ~= "nil" and goal > value
+		return value ~= nil and goal > value
 	elseif condition:sub(1, 4) == "has_" then
-		if type(value) == "nil" then return false end
+		if value == nil then return false end
 		for _, g in ipairs(goal) do
 			if value == g then return true end
 		end
 		return false
+	elseif condition:sub(1, 4) == "not_" then
+		if value == nil then return true end
+		if type(goal) ~= "table" then
+			return value ~= goal
+		end
+		for _, g in ipairs(goal) do
+			if value == g then return false end
+		end
+		return true
 	else
 		value = env[condition]
 		return type(value) == "nil" or goal == value
@@ -66,7 +76,7 @@ local function get_weather_effects(player, weather_config, env)
 		config = weather_config.effects
 	end
 	for effect, value in pairs(config) do
-		if type(climate_mod.effects[effect]) ~= "nil" then
+		if climate_mod.effects[effect] ~= nil then
 			effects[effect] = value
 		end
 	end
@@ -92,7 +102,7 @@ function trigger.get_active_effects()
 			local env = environments[pname]
 			if env ~= nil then
 				if is_weather_active(player, wname, env) then
-					if type(climate_mod.current_weather[pname]) == "nil" then
+					if climate_mod.current_weather[pname] == nil then
 						climate_mod.current_weather[pname] = {}
 					end
 					table.insert(climate_mod.current_weather[pname], wname)

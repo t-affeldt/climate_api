@@ -43,6 +43,8 @@ climate_mod.settings = {
 	volume					= get_setting_number("volume", 1)
 }
 
+climate_mod.i18n = minetest.get_translator("climate_api")
+
 -- initialize empty registers
 climate_mod.weathers = {}
 climate_mod.effects = {}
