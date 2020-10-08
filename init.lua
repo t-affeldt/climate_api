@@ -40,7 +40,8 @@ climate_mod.settings = {
 	time_spread			= get_setting_number("time_spread", 1),
 	particle_count	= get_setting_number("particle_count", 1),
 	tick_speed			= get_setting_number("tick_speed", 1),
-	volume					= get_setting_number("volume", 1)
+	volume					= get_setting_number("volume", 1),
+	ceiling_checks	= get_setting_number("ceiling_checks", 10),
 }
 
 climate_mod.i18n = minetest.get_translator("climate_api")

@@ -19,6 +19,10 @@ climate_api_block_updates (Dynamically modify nodes) bool true
 # Only applied if climate_api_damage is also set to true.
 climate_api_raycast (Include wind speed in damage checks) bool true
 
+# Increase this number if you notice snow or rain inside large glass domes.
+# Decrease this number if you notice lag spikes or overall reduced game performance.
+ceiling_checks (Check x nodes on outdoor test) int 10 0 50
+
 
 [Weather Effects]
 
