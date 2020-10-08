@@ -1,4 +1,5 @@
 local world = {}
+local BASE_TIME = 0.2 * climate_mod.settings.time_spread
 
 local WIND_SPREAD = 600
 local WIND_SCALE = 2
@@ -17,7 +18,7 @@ local nobj_humidity_base
 
 local pn_wind_speed_x = {
 	offset = 0,
-	scale = WIND_SCALE * climate_mod.settings.time_spread,
+	scale = WIND_SCALE,
 	spread = {x = WIND_SPREAD, y = WIND_SPREAD, z = WIND_SPREAD},
 	seed = 31441,
 	octaves = 2,
@@ -27,7 +28,7 @@ local pn_wind_speed_x = {
 
 local pn_wind_speed_z = {
 	offset = 0,
-	scale = WIND_SCALE * climate_mod.settings.time_spread,
+	scale = WIND_SCALE,
 	spread = {x = WIND_SPREAD, y = WIND_SPREAD, z = WIND_SPREAD},
 	seed = 938402,
 	octaves = 2,
@@ -37,27 +38,27 @@ local pn_wind_speed_z = {
 
 local pn_heat = {
 	offset = 1,
-	scale = HEAT_SCALE * climate_mod.settings.time_spread,
+	scale = HEAT_SCALE,
 	spread = {x = HEAT_SPREAD, y = HEAT_SPREAD, z = HEAT_SPREAD},
-	seed = 24,
+	seed = 235896,
 	octaves = 2,
 	persist = 0.5,
 	lacunarity = 2
 }
 
 local pn_humidity = {
-	offset = 1,
-	scale = HUMIDITY_SCALE * climate_mod.settings.time_spread,
+	offset = 0,
+	scale = HUMIDITY_SCALE,
 	spread = {x = HUMIDITY_SPREAD, y = HUMIDITY_SPREAD, z = HUMIDITY_SPREAD},
 	seed = 8374061,
-	octaves = 3,
+	octaves = 2,
 	persist = 0.5,
 	lacunarity = 2
 }
 
 local pn_humidity_base = {
 	offset = 50,
-	scale = HUMIDITY_BASE_SCALE * climate_mod.settings.time_spread,
+	scale = HUMIDITY_BASE_SCALE,
 	spread = {x = HUMIDITY_BASE_SPREAD, y = HUMIDITY_BASE_SPREAD, z = HUMIDITY_BASE_SPREAD},
 	seed = 3803465,
 	octaves = 2,
@@ -90,6 +91,7 @@ local function update_humidity(timer)
 end
 
 function world.update_status(timer)
+	timer = math.floor(timer * BASE_TIME)
 	update_wind(timer)
 	update_heat(timer)
 	update_humidity(timer)
