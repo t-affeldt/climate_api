@@ -197,7 +197,7 @@ minetest.register_chatcommand("set_weather", {
 			return
 		end
 		climate_mod.forced_weather[weather] = status
-		minetest.chat_send_player(playername, S("Weather @1 successfully set to @2"), weather, arguments[2])
+		minetest.chat_send_player(playername, S("Weather @1 successfully set to @2", weather, arguments[2]))
 	end
 })
 
