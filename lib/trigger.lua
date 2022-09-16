@@ -68,7 +68,7 @@ local function is_weather_active(player, weather, env)
 end
 
 local function get_weather_effects(player, weather_config, env)
-	local config = {}
+	local config
 	local effects = {}
 	if type(weather_config.effects) == "function" then
 		config = weather_config.effects(env)
