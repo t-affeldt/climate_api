@@ -43,7 +43,7 @@ local function check_hit(player, ray)
 		)
 		origin = vector.add(origin, windpos)
 	end
-	local ray = minetest.raycast(origin, ppos)
+	ray = minetest.raycast(origin, ppos)
 	local obj = ray:next()
 	-- found nothing
 	if obj == nil then return false end
