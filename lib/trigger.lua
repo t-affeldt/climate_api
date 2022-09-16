@@ -85,22 +85,19 @@ end
 
 function trigger.get_active_effects()
 	local environments = {}
+	local effects = {}
+	climate_mod.current_weather = {}
+
 	for _, player in ipairs(minetest.get_connected_players()) do
-		local playername = player:get_player_name()
+		local pname = player:get_player_name()
 		local hp = player:get_hp()
 		-- skip weather presets for dead players
 		if hp ~= nil and hp > 0 then
-			environments[playername] = trigger.get_player_environment(player)
+			environments[pname] = trigger.get_player_environment(player)
 		end
-	end
-
-	local effects = {}
-	climate_mod.current_weather = {}
-	for wname, wconfig in pairs(climate_mod.weathers) do
-		for _, player in ipairs(minetest.get_connected_players()) do
-			local pname = player:get_player_name()
-			local env = environments[pname]
-			if env ~= nil then
+		local env = environments[pname]
+		if env ~= nil then
+			for wname, wconfig in pairs(climate_mod.weathers) do
 				if is_weather_active(player, wname, env) then
 					if climate_mod.current_weather[pname] == nil then
 						climate_mod.current_weather[pname] = {}
