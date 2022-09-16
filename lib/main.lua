@@ -1,15 +1,6 @@
 local GSCYCLE			=  0.03	* climate_mod.settings.tick_speed	-- only process event loop after this amount of time
 local WORLD_CYCLE = 30.00	* climate_mod.settings.tick_speed	-- only update global environment influences after this amount of time
 
-local function is_connected(playername)
-	local connected = minetest.get_connected_players()
-	for _, player in ipairs(connected) do
-		local name = player:get_player_name()
-		if playername == name then return true end
-	end
-	return false
-end
-
 local gs_timer = 0
 local world_timer = 0
 minetest.register_globalstep(function(dtime)
@@ -29,7 +20,7 @@ minetest.register_globalstep(function(dtime)
 	-- skip weather changes for offline players
 	for effect, data in pairs(previous_effects) do
 		for playername, _ in pairs(data) do
-			if not is_connected(playername) then
+			if not minetest.get_player_by_name(playername) then
 				previous_effects[effect][playername] = nil
 			end
 		end
