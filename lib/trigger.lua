@@ -83,12 +83,12 @@ local function get_weather_effects(player, weather_config, env)
 	return effects
 end
 
-function trigger.get_active_effects()
+function trigger.get_active_effects(players)
 	local environments = {}
 	local effects = {}
 	climate_mod.current_weather = {}
 
-	for _, player in ipairs(minetest.get_connected_players()) do
+	for _, player in ipairs(players) do
 		local pname = player:get_player_name()
 		local hp = player:get_hp()
 		-- skip weather presets for dead players
