@@ -42,6 +42,10 @@ local default_sky = {
 		count = 1000,
 		star_color = "#ebebff69",
 		scale = 1
+	},
+	light_data = {
+		shadow_intensity = 0.33,
+		saturation = 1
 	}
 }
 
@@ -70,6 +74,12 @@ local function set_skybox(playername, sky)
 	player:set_moon(sky.moon_data)
 	player:set_sun(sky.sun_data)
 	player:set_stars(sky.star_data)
+	if player.set_lighting then
+		player:set_lighting({
+			shadows = { intensity = sky.light_data.shadow_intensity },
+			saturation = sky.light_data.saturation
+		})
+	end
 end
 
 function skybox.update(playername)

@@ -55,13 +55,15 @@ end)
 
 climate_api.register_influence("daylight", function(pos)
 	pos = vector.add(pos, {x = 0, y = 1, z = 0})
-	return minetest.get_node_light(pos, 0.5) or 0
+	return minetest.get_natural_light(pos, 0.5) or 0
 end)
 
 climate_api.register_influence("indoors", function(pos)
 	pos = vector.add(pos, {x = 0, y = 1, z = 0})
-	local daylight = minetest.get_node_light(pos, 0.5) or 0
-	if daylight < 15 then return true end
+	local daylight = minetest.get_natural_light(pos, 0.5) or 0
+	-- max light is 15 but allow adjacent nodes to still be outdoors
+	-- to reduce effect switching on and off when walking underneath single nodes
+	if daylight < 14 then return true end
 
 	for i = 1, climate_mod.settings.ceiling_checks do
 		local lpos = vector.add(pos, {x = 0, y = i, z = 0})
