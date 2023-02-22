@@ -1,7 +1,3 @@
-local mod_player_monoids = minetest.get_modpath("player_monoids") ~= nil
-local mod_playerphysics = minetest.get_modpath("playerphysics") ~= nil
-local mod_pova = minetest.get_modpath("pova") ~= nil
-
 local utility = {}
 
 function utility.rangelim(value, min, max)
