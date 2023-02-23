@@ -1,5 +1,5 @@
-local GSCYCLE			=  0.3	* climate_mod.settings.tick_speed	-- only process event loop after this amount of time
-local WORLD_CYCLE = 30.00	* climate_mod.settings.tick_speed	-- only update global environment influences after this amount of time
+local GSCYCLE = 0.06 * climate_mod.settings.tick_speed	-- only process event loop after this amount of time
+local WORLD_CYCLE = 30.00 * climate_mod.settings.tick_speed	-- only update global environment influences after this amount of time
 
 local gs_timer = 0
 local world_timer = 0

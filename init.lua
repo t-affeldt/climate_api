@@ -25,24 +25,31 @@ end
 
 -- load settings from config file
 climate_mod.settings = {
-	damage					= get_setting_bool("damage", true),
-	raycast					= get_setting_bool("raycast", true),
-	particles				= get_setting_bool("particles", true),
-	skybox					= get_setting_bool("skybox", true),
-	sound						= get_setting_bool("sound", true),
-	hud_overlay			= get_setting_bool("hud_overlay", true),
-	wind						= get_setting_bool("wind", true),
-	seasons					= get_setting_bool("seasons", true),
-	fahrenheit			= get_setting_bool("fahrenheit", false),
-	block_updates		= get_setting_bool("block_updates", true),
-	heat						= get_setting_number("heat_base", 0),
-	humidity				= get_setting_number("humidity_base", 0),
-	time_spread			= get_setting_number("time_spread", 1),
-	particle_count	= get_setting_number("particle_count", 1),
-	tick_speed			= get_setting_number("tick_speed", 1),
-	volume					= get_setting_number("volume", 1),
-	ceiling_checks	= get_setting_number("ceiling_checks", 10),
+    damage = get_setting_bool("damage", true),
+    raycast = get_setting_bool("raycast", true),
+    particles = get_setting_bool("particles", true),
+    skybox = get_setting_bool("skybox", true),
+    sound = get_setting_bool("sound", true),
+    hud_overlay = get_setting_bool("hud_overlay", true),
+    wind = get_setting_bool("wind", true),
+    seasons = get_setting_bool("seasons", true),
+    fahrenheit = get_setting_bool("fahrenheit", false),
+    block_updates = get_setting_bool("block_updates", true),
+    heat = get_setting_number("heat_base", 0),
+    humidity = get_setting_number("humidity_base", 0),
+    time_spread = get_setting_number("time_spread", 1),
+    particle_count = get_setting_number("particle_count", 1),
+    tick_speed = get_setting_number("tick_speed", 1),
+    volume = get_setting_number("volume", 1),
+    ceiling_checks = get_setting_number("ceiling_checks", 10)
 }
+
+-- warn about clouds being overriden by MTG weather
+if climate_mod.settings.skybox and minetest.get_modpath("weather") and minetest.settings:get_bool("enable_weather") then
+    minetest.log("warning", "[Regional Weather] " ..
+        S("Disable MTG weather for the best experience. Check the forum for more information."))
+    minetest.settings:set_bool("enable_weather", false) -- try to disable MTG weather. may or may not work depending on load order
+end
 
 climate_mod.i18n = minetest.get_translator("climate_api")
 
