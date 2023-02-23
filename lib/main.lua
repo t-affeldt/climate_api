@@ -1,9 +1,12 @@
-local GSCYCLE			=  0.03	* climate_mod.settings.tick_speed	-- only process event loop after this amount of time
+local GSCYCLE			=  0.3	* climate_mod.settings.tick_speed	-- only process event loop after this amount of time
 local WORLD_CYCLE = 30.00	* climate_mod.settings.tick_speed	-- only update global environment influences after this amount of time
 
 local gs_timer = 0
 local world_timer = 0
 minetest.register_globalstep(function(dtime)
+	local player_list = minetest.get_connected_players()
+	if #player_list == 0 then return end
+
 	gs_timer = gs_timer + dtime
 	world_timer = world_timer + dtime
 
@@ -26,7 +29,7 @@ minetest.register_globalstep(function(dtime)
 		end
 	end
 
-	local current_effects = climate_mod.trigger.get_active_effects()
+	local current_effects = climate_mod.trigger.get_active_effects(player_list)
 
 	for name, effect in pairs(climate_mod.effects) do
 		local cycle = climate_mod.cycles[name].timespan * climate_mod.settings.tick_speed
