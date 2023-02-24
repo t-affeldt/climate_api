@@ -230,3 +230,18 @@ minetest.register_chatcommand("weather_influences", {
 		end
 	end
 })
+
+-- used to debug downfall
+minetest.register_chatcommand("explain_humidity", {
+	description = "Explains how the humidity value got calculated",
+	func = function(playername)
+		local base = climate_mod.settings.humidity
+		local biome = minetest.get_humidity((minetest.get_player_by_name(playername)):get_pos())
+		local random = climate_mod.state:get_float("humidity_random");
+		local random_base = climate_mod.state:get_float("humidity_base");
+		minetest.chat_send_player(playername, dump2(base, "base"))
+		minetest.chat_send_player(playername, dump2(biome, "biome"))
+		minetest.chat_send_player(playername, dump2(random, "random"))
+		minetest.chat_send_player(playername, dump2(random_base, "random_base"))
+	end
+})

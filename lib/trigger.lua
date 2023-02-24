@@ -9,7 +9,7 @@ function trigger.get_global_environment()
 end
 
 function trigger.get_position_environment(pos)
-	local env = table.copy(climate_mod.global_environment)
+	local env = trigger.get_global_environment()
 	for influence, func in pairs(climate_mod.influences) do
 		env[influence] = func(pos)
 	end

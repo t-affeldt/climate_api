@@ -9,7 +9,7 @@ function environment.get_heat(pos)
 	local height = climate_api.utility.rangelim((-pos.y + 10) / 15, -10, 10)
 	local time = climate_api.utility.normalized_cycle(minetest.get_timeofday()) * 0.6 + 0.7
 	local random = climate_mod.state:get_float("heat_random");
-	return (base + biome + height) * time * random
+	return base + ((biome + height) * time * random)
 end
 
 function environment.get_humidity(pos)
@@ -19,8 +19,7 @@ function environment.get_humidity(pos)
 	local base = climate_mod.settings.humidity
 	local biome = minetest.get_humidity(pos)
 	local random = climate_mod.state:get_float("humidity_random");
-	local random_base = climate_mod.state:get_float("humidity_base");
-	return (base + biome * 0.7 + random_base * 0.3) * random
+	return base + (((biome + 40) / 2) * random)
 end
 
 function environment.get_wind(pos)

@@ -6,9 +6,9 @@ local WIND_SCALE = 2
 local HEAT_SPREAD = 400
 local HEAT_SCALE = 0.3
 local HUMIDITY_SPREAD = 150
-local HUMIDITY_SCALE = 0.5
+local HUMIDITY_SCALE = 1
 local HUMIDITY_BASE_SPREAD = 800
-local HUMIDITY_BASE_SCALE = 40
+local HUMIDITY_BASE_SCALE = 20
 
 local nobj_wind_x
 local nobj_wind_z
@@ -47,23 +47,14 @@ local pn_heat = {
 }
 
 local pn_humidity = {
-	offset = 0,
+	offset = 1,
 	scale = HUMIDITY_SCALE,
 	spread = {x = HUMIDITY_SPREAD, y = HUMIDITY_SPREAD, z = HUMIDITY_SPREAD},
 	seed = 8374061,
 	octaves = 2,
 	persist = 0.5,
-	lacunarity = 2
-}
-
-local pn_humidity_base = {
-	offset = 50,
-	scale = HUMIDITY_BASE_SCALE,
-	spread = {x = HUMIDITY_BASE_SPREAD, y = HUMIDITY_BASE_SPREAD, z = HUMIDITY_BASE_SPREAD},
-	seed = 3803465,
-	octaves = 2,
-	persist = 0.5,
-	lacunarity = 2
+	lacunarity = 2,
+	flags = "noeased"
 }
 
 local function update_wind(timer)
@@ -83,11 +74,8 @@ end
 
 local function update_humidity(timer)
 	nobj_humidity = nobj_humidity or minetest.get_perlin(pn_humidity)
-	local n_humidity = nobj_humidity:get_2d({x = timer, y = 0})
+	local n_humidity = nobj_humidity:get_2d({x = timer * 3, y = 0})
 	climate_mod.state:set_float("humidity_random", n_humidity)
-	nobj_humidity_base = nobj_humidity_base or minetest.get_perlin(pn_humidity_base)
-	local n_humidity_base = nobj_humidity_base:get_2d({x = timer, y = 0})
-	climate_mod.state:set_float("humidity_base", n_humidity_base)
 end
 
 function world.update_status(timer)
