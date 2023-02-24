@@ -19,7 +19,7 @@ function environment.get_humidity(pos)
 	local base = climate_mod.settings.humidity
 	local biome = minetest.get_humidity(pos)
 	local random = climate_mod.state:get_float("humidity_random");
-	return base + (((biome + 40) / 2) * random)
+	return base + ((biome * 0.7 + 40 * 0.3) * random)
 end
 
 function environment.get_wind(pos)

@@ -10,7 +10,7 @@ climate_api.register_influence("humidity",
 	climate_api.environment.get_humidity
 )
 
-climate_api.register_influence("base_humidity",
+climate_api.register_influence("biome_humidity",
 	minetest.get_humidity
 )
 
