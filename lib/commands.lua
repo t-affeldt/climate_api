@@ -242,6 +242,5 @@ minetest.register_chatcommand("explain_humidity", {
 		minetest.chat_send_player(playername, dump2(base, "base"))
 		minetest.chat_send_player(playername, dump2(biome, "biome"))
 		minetest.chat_send_player(playername, dump2(random, "random"))
-		minetest.chat_send_player(playername, dump2(random_base, "random_base"))
 	end
 })

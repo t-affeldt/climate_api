@@ -7,8 +7,7 @@ local HEAT_SPREAD = 400
 local HEAT_SCALE = 0.3
 local HUMIDITY_SPREAD = 150
 local HUMIDITY_SCALE = 1
-local HUMIDITY_BASE_SPREAD = 800
-local HUMIDITY_BASE_SCALE = 20
+local HUMIDITY_TIMESCALE = 1
 
 local nobj_wind_x
 local nobj_wind_z
@@ -74,7 +73,7 @@ end
 
 local function update_humidity(timer)
 	nobj_humidity = nobj_humidity or minetest.get_perlin(pn_humidity)
-	local n_humidity = nobj_humidity:get_2d({x = timer * 3, y = 0})
+	local n_humidity = nobj_humidity:get_2d({x = timer * HUMIDITY_TIMESCALE, y = 0})
 	climate_mod.state:set_float("humidity_random", n_humidity)
 end
 
