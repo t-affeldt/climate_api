@@ -1,3 +1,5 @@
+local mod_lighting_monoid = minetest.get_modpath("lighting_monoid") ~= nil
+
 local default_sky = {
 	sky_data = {
 		base_color = nil,
@@ -74,11 +76,15 @@ local function set_skybox(playername, sky)
 	player:set_moon(sky.moon_data)
 	player:set_sun(sky.sun_data)
 	player:set_stars(sky.star_data)
-	if player.set_lighting then
-		player:set_lighting({
-			shadows = { intensity = sky.light_data.shadow_intensity },
-			saturation = sky.light_data.saturation
-		})
+	local lighting = {
+		shadows = { intensity = sky.light_data.shadow_intensity },
+		saturation = sky.light_data.saturation
+	}
+	if mod_lighting_monoid then
+		lighting_monoid:add_change(player, lighting, "climate_api:merged_lighting")
+		lighting_monoid.del_change(player, "lighting_monoid:base_shadow")
+	elseif player.set_lighting then
+		player:set_lighting(lighting)
 	end
 end
 
