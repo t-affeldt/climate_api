@@ -44,14 +44,15 @@ climate_mod.settings = {
     ceiling_checks = get_setting_number("ceiling_checks", 10)
 }
 
+climate_mod.i18n = minetest.get_translator("climate_api")
+
 -- warn about clouds being overriden by MTG weather
 if climate_mod.settings.skybox and minetest.get_modpath("weather") and minetest.settings:get_bool("enable_weather") then
     minetest.log("warning", "[Regional Weather] " ..
-        S("Disable MTG weather for the best experience. Check the forum for more information."))
-    minetest.settings:set_bool("enable_weather", false) -- try to disable MTG weather. may or may not work depending on load order
+        climate_mod.i18n("Disable MTG weather for the best experience. Check the forum for more information."))
+    -- try to disable MTG weather. may or may not work depending on load order
+    minetest.settings:set_bool("enable_weather", false)
 end
-
-climate_mod.i18n = minetest.get_translator("climate_api")
 
 -- initialize empty registers
 climate_mod.weathers = {}
