@@ -82,7 +82,7 @@ local function set_skybox(playername, sky)
 	}
 	if mod_lighting_monoid then
 		lighting_monoid:add_change(player, lighting, "climate_api:merged_lighting")
-		lighting_monoid.del_change(player, "lighting_monoid:base_shadow")
+		lighting_monoid:del_change(player, "lighting_monoid:base_shadow")
 	elseif player.set_lighting then
 		player:set_lighting(lighting)
 	end
