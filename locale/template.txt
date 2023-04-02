@@ -1,4 +1,5 @@
 # textdomain:climate_api
+Disable MTG weather for the best experience=
 Make changes to the current weather=
 Display weather information=
 The following weather presets are active for you:=
