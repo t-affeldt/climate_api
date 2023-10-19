@@ -57,7 +57,7 @@ minetest.register_chatcommand("weather", {
 
 -- set base heat to increase or decrease global climate temperatures
 minetest.register_chatcommand("set_base_heat", {
-	params = "<heat>",
+	params = S("<heat>"),
 	description = S("Override the weather algorithm's base heat"),
 	privs = { weather = true },
 	func = function(playername, param)
@@ -73,7 +73,7 @@ minetest.register_chatcommand("set_base_heat", {
 
 -- override global heat levels with given value
 minetest.register_chatcommand("set_heat", {
-	params = "<heat>",
+	params = S("<heat>"),
 	description = S("Override the weather algorithm's heat"),
 	privs = { weather = true },
 	func = function(playername, param)
@@ -93,7 +93,7 @@ minetest.register_chatcommand("set_heat", {
 
 -- set base heat to increase or decrease global climate humidity
 minetest.register_chatcommand("set_base_humidity", {
-	params = "<humidity>",
+	params = S("<humidity>"),
 	description = S("Override the weather algorithm's base humidity"),
 	privs = { weather = true },
 	func = function(playername, param)
@@ -109,7 +109,7 @@ minetest.register_chatcommand("set_base_humidity", {
 
 -- override global humidity with given value
 minetest.register_chatcommand("set_humidity", {
-	params = "<humidity>",
+	params = S("<humidity>"),
 	description = S("Override the weather algorithm's humidity"),
 	privs = { weather = true },
 	func = function(playername, param)
@@ -129,7 +129,7 @@ minetest.register_chatcommand("set_humidity", {
 
 -- override wind direction and speed with given values
 minetest.register_chatcommand("set_wind", {
-	params = "<wind>",
+	params = S("<wind>"),
 	description = S("Override the weather algorithm's windspeed"),
 	privs = { weather = true },
 	func = function(playername, param)
@@ -171,7 +171,7 @@ minetest.register_chatcommand("weather_settings", {
 
 -- force a weather preset or disable it
 minetest.register_chatcommand("set_weather", {
-	params ="<weather> <status>",
+	params = S("<weather> <status>"),
 	description = S("Turn the specified weather preset on or off for all players or reset it to automatic"),
 	privs = { weather = true },
 	func = function(playername, param)
@@ -233,7 +233,7 @@ minetest.register_chatcommand("weather_influences", {
 
 -- used to debug downfall
 minetest.register_chatcommand("explain_humidity", {
-	description = "Explains how the humidity value got calculated",
+	description = S("Explains how the humidity value got calculated"),
 	func = function(playername)
 		local base = climate_mod.settings.humidity
 		local biome = minetest.get_humidity((minetest.get_player_by_name(playername)):get_pos())
