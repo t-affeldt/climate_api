@@ -80,12 +80,7 @@ local function set_skybox(playername, sky)
 		shadows = { intensity = sky.light_data.shadow_intensity },
 		saturation = sky.light_data.saturation
 	}
-	if mod_lighting_monoid then
-		lighting_monoid:add_change(player, lighting, "climate_api:merged_lighting")
-		lighting_monoid:del_change(player, "lighting_monoid:base_shadow")
-	elseif player.set_lighting then
-		player:set_lighting(lighting)
-	end
+	lighting_monoid:add_change(player, lighting, "climate_api:merged_lighting")
 end
 
 function skybox.update(playername)
